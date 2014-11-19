@@ -4,13 +4,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
         <style>
-            ul, li {font-family: Tahoma; font-size:12px;}
+            ul, li, pre {font-family: Tahoma; font-size:12px;}
             li {list-style-type:none;}
         </style>
 		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script>
+		    function format(parentControl, obj) {
+		        var pre = $("<pre>");
+		        pre.html(JSON.stringify(obj, null, "\t"));
+		        parentControl.append(pre);
+		    }
 
-		    function render(parentControl, name, obj) {
+		    function formatToFriendlyView(parentControl, name, obj) {
 		        if (isSimpleType(obj)) {
 		            renderItemOfSimpleType(parentControl, name, obj);
 		        } else {
@@ -35,7 +40,7 @@
 		        var isArray = $.isArray(obj);
 		        for (var prop in obj) {
 		            var propName = isArray ? "[" + prop + "]" : prop;
-		            render(list, propName, obj[prop]);
+		            formatToFriendlyView(list, propName, obj[prop]);
 		        }
 		    }
 
@@ -54,10 +59,17 @@
         <script>
             $(document).ready(function () {
                 try {
-                    var inputData = "[INPUTDATA]";
+                    var inputData = "[InputDataPlaceholder]";
                     var obj = $.parseJSON(inputData);
-                    $("#view").html("");
-                    render($("#view"), null, obj);
+
+                    var divViewer = $("#view");
+                    divViewer.html("");
+
+                    if ([KeepJsonMarkupPlaceholder]) {
+                        format(divViewer, obj);
+                    } else {
+                        formatToFriendlyView(divViewer, null, obj);
+                    }
                 } catch (e) {
                     alert("Failed to parse JSON data. Error: " + e.message);
                 }
