@@ -6,14 +6,19 @@
              Background="{DynamicResource VsBrush.Window}"
              Foreground="{DynamicResource VsBrush.WindowText}"
              mc:Ignorable="d"
-             d:DesignHeight="600" d:DesignWidth="300"
+             d:DesignHeight="600" d:DesignWidth="700"
              Name="MyToolWindow">
     <Grid>
         <DockPanel LastChildFill="True">
             <TextBlock Margin="10" DockPanel.Dock="Top" >Paste JSON Data:</TextBlock>
             <TextBox Margin="10 0 10 10" DockPanel.Dock="Top" TextWrapping="Wrap" AcceptsReturn="True" Height="200"  HorizontalContentAlignment="Stretch" 
                      Name="tbData" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
-            <Button Margin="10 0 10 10" DockPanel.Dock="Top" Content="Format to Friendly View" Click="btnFormat_Click" Width="200" Height="30" Name="btnFormat"  HorizontalAlignment="Left"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0 10 10" DockPanel.Dock="Top">
+                <RadioButton GroupName="FormatType" Content="Human-friendly view" Click="FormatJson" Margin="10 10 10 10" IsChecked="True"></RadioButton>
+                <RadioButton GroupName="FormatType" Content="Programmer-friendly view" Click="FormatJson" Margin="20 10 10 10" Name="btnProgrammerFriendlyView"></RadioButton>
+                <Button Content="Format" Click="FormatJson" Width="150" Height="30" Name="btnFormat"  HorizontalAlignment="Left"/>
+                <Button Content="Print formatted data" Click="PrintFormattedJson" Width="150" Height="30" Name="btnPrint"  HorizontalAlignment="Left" Margin="10 0 0 0"/>
+            </StackPanel>
             <WebBrowser x:Name="webBrowser" Margin="10 0 10 10"></WebBrowser>
         </DockPanel>
     </Grid>

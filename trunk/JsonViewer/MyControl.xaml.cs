@@ -31,13 +31,28 @@ namespace Marss.JsonViewer
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
-        private void btnFormat_Click(object sender, RoutedEventArgs e)
+        private void FormatJson(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(tbData.Text))
+                return;
+
             var json = tbData.Text;
             json =  json.Replace(Environment.NewLine, "").Replace("\\", "\\\\").Replace("\"", "\\\"");
             var html = ReadContentFromResources("Marss.JsonViewer.Resources.JsonView.htm");
-            html = html.Replace("[INPUTDATA]", json);
+            html = html.Replace("[InputDataPlaceholder]", json);
+
+            var keepJsonMarkup = btnProgrammerFriendlyView.IsChecked;
+            html = html.Replace("[KeepJsonMarkupPlaceholder]", keepJsonMarkup.HasValue && keepJsonMarkup.Value ? "true" : "false" );
+
             webBrowser.NavigateToString(html);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1300:SpecifyMessageBoxOptions")]
+        private void PrintFormattedJson(object sender, RoutedEventArgs e)
+        {
+            var doc = webBrowser.Document as mshtml.IHTMLDocument2;
+            if (doc != null)
+                doc.execCommand("Print", true, null);
         }
 
         private String ReadContentFromResources(String pathToResource)
@@ -46,13 +61,12 @@ namespace Marss.JsonViewer
             {
                 if (stream != null)
                 {
-                    using (var reader = new StreamReader(stream))
-                    {
-                        return reader.ReadToEnd();
-                    }
+                    return new StreamReader(stream).ReadToEnd();
                 }
             }
             return string.Empty;
         }
+
+        
     }
 }
