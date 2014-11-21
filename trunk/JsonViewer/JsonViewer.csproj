@@ -128,8 +128,13 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyControl.xaml.cs">
-      <DependentUpon>MyControl.xaml</DependentUpon>
+    <Compile Include="Forms\ComparisonWindow.xaml.cs">
+      <DependentUpon>ComparisonWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HtmlBuilder.cs" />
+    <Compile Include="Forms\JsonComparer.cs" />
+    <Compile Include="Forms\MainForm.xaml.cs">
+      <DependentUpon>MainForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyToolWindow.cs" />
     <Compile Include="Guids.cs" />
@@ -175,7 +180,11 @@
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MyControl.xaml">
+    <Page Include="Forms\ComparisonWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\MainForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
