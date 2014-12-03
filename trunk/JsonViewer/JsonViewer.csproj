@@ -176,7 +176,9 @@
     <None Include="Resources\Images.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\vertical.png" />
     <EmbeddedResource Include="Resources\JsonView.htm" />
+    <Resource Include="Resources\horizontal.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>

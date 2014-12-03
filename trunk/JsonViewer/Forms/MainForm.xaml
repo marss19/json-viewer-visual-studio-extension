@@ -8,23 +8,59 @@
              mc:Ignorable="d"
              d:DesignHeight="600" d:DesignWidth="1000"
              Name="MyToolWindow">
-    <Grid>
-        <DockPanel LastChildFill="True">
-            <TextBlock Margin="10" DockPanel.Dock="Top" >Paste JSON data:</TextBlock>
-            <TextBox Margin="10 0 10 10" DockPanel.Dock="Top" TextWrapping="Wrap" AcceptsReturn="True" Height="200"  HorizontalContentAlignment="Left" 
+    <DockPanel LastChildFill="True">
+        <Grid Name="grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <DockPanel Grid.Column="0" Grid.Row="0" LastChildFill="True" Margin="5">
+                <Border DockPanel.Dock="Top" Height="28">
+                    <TextBlock VerticalAlignment="Center">Paste JSON Data:</TextBlock>
+                </Border>
+                
+                <TextBox TextWrapping="Wrap" AcceptsReturn="True"  HorizontalContentAlignment="Left" 
                      Name="tbData" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto"></TextBox>
-            <DockPanel Margin="10 0 10 10" DockPanel.Dock="Top">
-                <RadioButton DockPanel.Dock="Left" GroupName="FormatType" Click="FormatJson" Margin="10 10 10 10" IsChecked="True">
-                    <TextBlock Foreground="{DynamicResource VsBrush.WindowText}">Human-friendly view</TextBlock>
-                </RadioButton>
-                <RadioButton DockPanel.Dock="Left" GroupName="FormatType" Click="FormatJson" Margin="20 10 10 10" Name="btnProgrammerFriendlyView">
-                    <TextBlock Foreground="{DynamicResource VsBrush.WindowText}">Programmer-friendly view</TextBlock>
-                </RadioButton>
-                <Button DockPanel.Dock="Left" Content="Format" Click="FormatJson" Width="150" Height="30" Name="btnFormat"  HorizontalAlignment="Left"/>
-                <Button DockPanel.Dock="Left" Content="Print formatted data" Click="PrintFormattedJson" Width="150" Height="30" Name="btnPrint"  HorizontalAlignment="Left" Margin="10 0 10 0"/>
-                <Button DockPanel.Dock="Left" Content="Compare to..." Click="CompareToAnotherJson" Width="150" Height="30" HorizontalAlignment="Left"/>
             </DockPanel>
-            <WebBrowser x:Name="webBrowser" Margin="10 0 10 10"></WebBrowser>
-        </DockPanel>
-    </Grid>
+
+            <GridSplitter Name="splitter"
+                    ResizeDirection="Rows"
+                    Grid.ColumnSpan="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Height="5"
+                    Cursor="SizeNS"
+                    Margin="5 0 5 0">
+            </GridSplitter>
+
+            <DockPanel Name="pnlFormattedView" Grid.Column="0" Grid.Row="1" LastChildFill="True" Margin="5">
+                <DockPanel DockPanel.Dock="Top" Height="28">
+                    <Button  DockPanel.Dock="Right" Height="17" Width="17" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0 0 0 1" Click="SplitVertical">
+                        <Image Source="/JsonViewer;component/Resources/vertical.png"></Image>
+                    </Button>
+                    <Button DockPanel.Dock="Right" Height="17" Width="17" BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Margin="0 0 0 1" Click="SplitHorizontal">
+                        <Image Source="/JsonViewer;component/Resources/horizontal.png"></Image>
+                    </Button>
+                    <RadioButton DockPanel.Dock="Left" GroupName="FormatType" Checked="FormatJson" IsChecked="True" Margin="10 6 10 0">
+                        <TextBlock Foreground="{DynamicResource VsBrush.WindowText}">Human Friendly View</TextBlock>
+                    </RadioButton>
+                    <RadioButton DockPanel.Dock="Left" GroupName="FormatType" Checked="FormatJson" Name="btnProgrammerFriendlyView" Margin="10 6 10 0">
+                        <TextBlock Foreground="{DynamicResource VsBrush.WindowText}">Programmer Friendly View</TextBlock>
+                    </RadioButton>
+                    <Button DockPanel.Dock="Left" Content="Format" Click="FormatJson" Width="150" Height="25" Name="btnFormat"  HorizontalAlignment="Left" Margin="10 0 0 3"/>
+                    <Button DockPanel.Dock="Left" Content="Print formatted data" Click="PrintFormattedJson" Width="150" Height="25" Name="btnPrint"  HorizontalAlignment="Left" Margin="5 0 5 3"/>
+                    <Button DockPanel.Dock="Left" Content="Compare to..." Click="CompareToAnotherJson" Width="150" Height="25" HorizontalAlignment="Left" Margin="0 0 0 3"/>
+                </DockPanel>
+                <Border BorderThickness="1" BorderBrush="LightGray">
+                    <WebBrowser x:Name="webBrowser"></WebBrowser>
+                </Border>
+            </DockPanel>
+        </Grid>
+
+    </DockPanel>
 </UserControl>
