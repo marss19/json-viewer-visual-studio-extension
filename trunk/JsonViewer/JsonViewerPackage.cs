@@ -8,6 +8,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using Marss.JsonViewer.Services;
 
 namespace Marss.JsonViewer
 {
@@ -44,6 +45,8 @@ namespace Marss.JsonViewer
         public JsonViewerPackage()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+
+            JsonComparer.ServiceProvider = (System.IServiceProvider)this;
         }
 
         /// <summary>
@@ -59,7 +62,7 @@ namespace Marss.JsonViewer
             ToolWindowPane window = this.FindToolWindow(typeof(MyToolWindow), 0, true);
             if ((null == window) || (null == window.Frame))
             {
-                throw new NotSupportedException(Resources.CanNotCreateWindow);
+                throw new NotSupportedException("Cannot create the tool window.");
             }
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
