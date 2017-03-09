@@ -1,79 +1,96 @@
 ﻿<html>
-	<head>
-        <meta http-equiv="X-UA-Compatible" content="IE=8,9,10" />
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8,9,10" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-        <style>
-            ul, li, pre {font-family: Tahoma; font-size:12px;}
-            li {list-style-type:none;}
-        </style>
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script>
-		    function format(parentControl, obj) {
-		        var pre = $("<pre>");
-		        pre.html(JSON.stringify(obj, null, "\t"));
-		        parentControl.append(pre);
-		    }
+    <style>
+        ul, li, pre {
+            font-family: Tahoma;
+            font-size: 12px;
+        }
 
-		    function formatToFriendlyView(parentControl, name, obj) {
-		        if (isSimpleType(obj)) {
-		            renderItemOfSimpleType(parentControl, name, obj);
-		        } else {
-		            renderObject(parentControl, name, obj);
-		        }
-		    }
+        li {
+            list-style-type: none;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
 
-		    function renderItemOfSimpleType(parentControl, name, value) {
-		        parentControl.append("<li><b>" + name + "</b>: " + value + "</li>");
-		    }
 
-		    function renderObject(parentControl, name, obj) {
-		        if (parentControl.prop("tagName") == "UL") {
-		            var listItem = (name) ? $("<li><b>" + name + "</b>:</li>") : $("<li></li>");
-		            parentControl.append(listItem);
-		            parentControl = listItem;
-		        }
+        function defaultFormat (data) {
+            _format(data, false);
+        };
 
-		        var list = $("<ul></ul>");
-		        parentControl.append(list);
+        function customFormat(data) {
+            _format(data, true);
+        };
 
-		        var isArray = $.isArray(obj);
-		        for (var prop in obj) {
-		            var propName = isArray ? "[" + prop + "]" : prop;
-		            formatToFriendlyView(list, propName, obj[prop]);
-		        }
-		    }
+        //////////////
 
-		    function isSimpleType(value) {
-		        if (value == null || value == undefined) {
-		            return true;
-		        }
-		        var type = typeof value;
-		        return (type === "string" || type === "number" || type === "boolean");
-		    }
+        function _format(data, customFormat) {
+            try {
+                var obj = $.parseJSON(data);
 
-		</script>
-	</head>
-	<body>
-		<div id="view"></div>
-        <script>
-            $(document).ready(function () {
-                try {
-                    var inputData = "[InputDataPlaceholder]";
-                    var obj = $.parseJSON(inputData);
+                var divViewer = $("#view");
+                divViewer.html("");
 
-                    var divViewer = $("#view");
-                    divViewer.html("");
-
-                    if ([KeepJsonMarkupPlaceholder]) {
-                        format(divViewer, obj);
-                    } else {
-                        formatToFriendlyView(divViewer, null, obj);
-                    }
-                } catch (e) {
-                    alert("Failed to parse JSON data. Error: " + e.message);
+                if (customFormat) {
+                    _formatHumanFriendly(divViewer, null, obj);
+                } else {
+                    _formatAsUsual(divViewer, obj);
                 }
-            });
-        </script>
-	</body>
+            } catch (e) {
+                alert("Failed to parse JSON data. Error: " + e.message);
+            }
+        }
+
+        function _formatAsUsual(parentControl, obj) {
+            var pre = $("<pre>");
+            pre.html(JSON.stringify(obj, null, "\t"));
+            parentControl.append(pre);
+        }
+
+        function _formatHumanFriendly(parentControl, name, obj) {
+            if (_isSimpleType(obj)) {
+                _renderItemOfSimpleType(parentControl, name, obj);
+            } else {
+                _renderObject(parentControl, name, obj);
+            }
+        }
+
+        function _renderItemOfSimpleType(parentControl, name, value) {
+            parentControl.append("<li><b>" + name + "</b>: " + value + "</li>");
+        }
+
+        function _renderObject(parentControl, name, obj) {
+            if (parentControl.prop("tagName") == "UL") {
+                var listItem = (name) ? $("<li><b>" + name + "</b>:</li>") : $("<li></li>");
+                parentControl.append(listItem);
+                parentControl = listItem;
+            }
+
+            var list = $("<ul></ul>");
+            parentControl.append(list);
+
+            var isArray = $.isArray(obj);
+            for (var prop in obj) {
+                var propName = isArray ? "[" + prop + "]" : prop;
+                _formatHumanFriendly(list, propName, obj[prop]);
+            }
+        }
+
+        function _isSimpleType(value) {
+            if (value == null || value == undefined) {
+                return true;
+            }
+            var type = typeof value;
+            return (type === "string" || type === "number" || type === "boolean");
+        }
+
+
+    </script>
+</head>
+<body>
+    <div id="view"></div>
+</body>
 </html>

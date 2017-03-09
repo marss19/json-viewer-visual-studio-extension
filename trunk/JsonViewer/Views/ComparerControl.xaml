@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="Marss.JsonViewer.Views.ComparerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Marss.JsonViewer.Views"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+            <Button Margin="3" Command="{Binding CompareFormattedCommand}">
+                <TextBlock Margin="3 0">Format &amp; Compare</TextBlock>
+            </Button>
+            <Button Margin="3" Command="{Binding CompareCommand}">
+                <TextBlock Margin="3 0">Compare</TextBlock>
+            </Button>
+        </StackPanel>
+
+        <TextBox HorizontalAlignment="Stretch" Grid.Row="1"
+                 Text="{Binding Json1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
+        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="2"
+                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                 Text="{Binding Json1Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
+
+        <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"
+                 Text="{Binding Json2Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
+        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Grid.Row="2"
+                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                 Text="{Binding Json2Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
+    </Grid>
+</UserControl>

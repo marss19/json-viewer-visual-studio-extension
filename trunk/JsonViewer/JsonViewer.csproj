@@ -133,32 +133,34 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\ComparisonWindow.xaml.cs">
-      <DependentUpon>ComparisonWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\HtmlBuilder.cs" />
-    <Compile Include="Forms\JsonComparer.cs" />
-    <Compile Include="Forms\MainForm.xaml.cs">
-      <DependentUpon>MainForm.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Services\JsonComparer.cs" />
     <Compile Include="MyToolWindow.cs" />
     <Compile Include="Guids.cs" />
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="JsonViewerPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PkgCmdID.cs" />
+    <Compile Include="Services\JsonFormatter.cs" />
+    <Compile Include="ViewModels\ComparerTabViewModel.cs" />
+    <Compile Include="ViewModels\DefaultViewerTabModel.cs" />
+    <Compile Include="ViewModels\TabsViewModel.cs" />
+    <Compile Include="ViewModels\TabViewModelBase.cs" />
+    <Compile Include="ViewModels\Utils\GenericCommand.cs" />
+    <Compile Include="ViewModels\Utils\WebBrowserUtility.cs" />
+    <Compile Include="Views\ComparerControl.xaml.cs">
+      <DependentUpon>ComparerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DefaultViewerControl.xaml.cs">
+      <DependentUpon>DefaultViewerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Layout.xaml.cs">
+      <DependentUpon>Layout.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ToolWindow.xaml.cs">
+      <DependentUpon>ToolWindow.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
@@ -181,24 +183,29 @@
     <None Include="Resources\Images.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\vertical.png" />
     <EmbeddedResource Include="Resources\JsonView.htm" />
-    <Resource Include="Resources\horizontal.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Forms\ComparisonWindow.xaml">
+    <Page Include="Views\ComparerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="Forms\MainForm.xaml">
+    <Page Include="Views\DefaultViewerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Layout.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ToolWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\" />
   </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
