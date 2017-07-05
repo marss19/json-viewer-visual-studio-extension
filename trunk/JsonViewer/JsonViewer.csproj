@@ -116,6 +116,9 @@
       <HintPath>..\packages\Microsoft.VisualStudio.Validation.14.1.111\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -184,14 +187,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PkgCmdID.cs" />
     <Compile Include="Services\JsonFormatter.cs" />
+    <Compile Include="Services\JsonParser.cs" />
     <Compile Include="ViewModels\ComparerTabViewModel.cs" />
     <Compile Include="ViewModels\DefaultViewerTabModel.cs" />
+    <Compile Include="ViewModels\ParserTabViewModel.cs" />
     <Compile Include="ViewModels\TabsViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
     <Compile Include="ViewModels\Utils\GenericCommand.cs" />
     <Compile Include="ViewModels\Utils\WebBrowserUtility.cs" />
     <Compile Include="Views\ComparerControl.xaml.cs">
       <DependentUpon>ComparerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ParserControl.xaml.cs">
+      <DependentUpon>ParserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DefaultViewerControl.xaml.cs">
       <DependentUpon>DefaultViewerControl.xaml</DependentUpon>
@@ -232,12 +240,17 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\JsonView.htm" />
+    <EmbeddedResource Include="Resources\JsonParseResults.htm" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ComparerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ParserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DefaultViewerControl.xaml">
       <SubType>Designer</SubType>

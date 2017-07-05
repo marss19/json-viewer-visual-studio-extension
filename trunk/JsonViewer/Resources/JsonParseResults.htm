@@ -1,0 +1,63 @@
+﻿<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8,9,10" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <style>
+        ul, li, pre, div {
+            font-family: Tahoma;
+            font-size: 12px;
+        }
+
+        #summary {
+            border-bottom: dotted 1px #7b4f9d;
+            color: #7b4f9d;
+            font-weight: bold;
+            padding: 5px;
+        }
+    </style>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+
+
+        function displaValidJson (data) {
+            try {
+                var obj = $.parseJSON(data);
+                var text = JSON.stringify(obj, null, "\t");
+
+                _display("JSON is correct.", text, false);
+
+            } catch (e) {
+                _display("JSON has errors.", e.message, false);
+            }
+
+        };
+
+        function displayInvalidJson(data) {
+            _display("JSON has errors.", data, true);
+        };
+
+        //////////////
+
+        function _display(message, data, isHtml) {
+            $("#summary").text(message);
+
+            var divViewer = $("#view");
+            divViewer.html("");
+
+            var pre = $("<pre>");
+            if (isHtml) {
+                pre.html(data);
+            } else {
+                pre.text(data);
+            }
+            divViewer.append(pre);
+        }
+
+    </script>
+</head>
+<body>
+    <div id="summary" style="border-bottom:dotted 1px">JSON is correct.</div>
+    <div id="view"></div>
+</body>
+</html>
