@@ -9,6 +9,10 @@
             font-size: 12px;
         }
 
+        pre {
+            word-wrap: break-word;
+        }
+
         #summary {
             border-bottom: dotted 1px #7b4f9d;
             color: #7b4f9d;
@@ -24,38 +28,35 @@
     <script>
 
 
-        function displaValidJson (data) {
+        function displaValidJson(dataAsText) {
+
+            var container = $("<pre>");
             try {
-                var obj = $.parseJSON(data);
+                var obj = $.parseJSON(dataAsText);
                 var text = JSON.stringify(obj, null, "\t");
-
-                _display("JSON is correct.", text, false);
-
+                container.text(dataAsText)
+                _display("JSON is correct.", container);
             } catch (e) {
-                _display("JSON has errors.", e.message, false);
+                container.text(e.message)
+                _display("JSON has errors.", container);
             }
 
         };
 
-        function displayInvalidJson(data, errorMessage) {
-            _display(errorMessage, data, true);
+        function displayInvalidJson(dataAsHtml, errorMessage) {
+            var container = $("<pre>");
+            container.html(dataAsHtml);
+            _display(errorMessage, container);
         };
 
         //////////////
 
-        function _display(message, data, isHtml) {
+        function _display(message, container) {
             $("#summary").text(message);
 
             var divViewer = $("#view");
             divViewer.html("");
-
-            var pre = $("<pre>");
-            if (isHtml) {
-                pre.html(data);
-            } else {
-                pre.text(data);
-            }
-            divViewer.append(pre);
+            divViewer.append(container);
         }
 
     </script>

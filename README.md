@@ -9,6 +9,7 @@ Please note that custom VS extensions cannot be installed into Express editions 
 - ability to print formatted data
 - ability to format input data keeping JSON markup and omitting it
 - ability to compare 2 JSONs
+- ability to validate incorrect JSON
 
 Download the latest release from Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=MykolaTarasyuk.JSONViewer
 
@@ -24,4 +25,6 @@ Download the latest release from Visual Studio Marketplace: https://marketplace.
 ![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jw-compare.png)
 
 
-Project migrated from https://jsonviewervsextension.codeplex.com/
+##### Screenshot 4. Validation.
+![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jw-validator.png)
+
