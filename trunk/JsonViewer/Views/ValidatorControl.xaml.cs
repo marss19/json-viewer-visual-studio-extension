@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Marss.JsonViewer.Views
 {
     /// <summary>
-    /// Interaction logic for ParserControl.xaml
+    /// Interaction logic for ValidatorControl.xaml
     /// </summary>
-    public partial class ParserControl : UserControl
+    public partial class ValidatorControl : UserControl
     {
-        public ParserControl()
+        public ValidatorControl()
         {
             InitializeComponent();
         }

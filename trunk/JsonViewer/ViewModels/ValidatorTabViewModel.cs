@@ -11,20 +11,20 @@ using System.Windows.Input;
 
 namespace Marss.JsonViewer.ViewModels
 {
-    public class ParserTabViewModel : TabViewModelBase
+    public class ValidatorTabViewModel : TabViewModelBase
     {
-        public ParserTabViewModel()
+        public ValidatorTabViewModel()
         {
-             Header = "Parser";
+             Header = "Validator";
              ResourcePath = "Marss.JsonViewer.Resources.JsonParseResults.htm";
 
-             ParseCommand = new GenericCommand<ParserTabViewModel, object>(this, Parse, CanParse);
+             ParseCommand = new GenericCommand<ValidatorTabViewModel, object>(this, Parse, CanParse);
         }
 
 
         public override string UserControlName
         {
-            get { return "ParserControl"; }
+            get { return "ValidatorControl"; }
         }
 
         public string JsonToParse
@@ -54,20 +54,21 @@ namespace Marss.JsonViewer.ViewModels
         private const string DisplayValidJsonFunctionName = "displaValidJson";
         private const string DisplayInvalidJsonFunctionName = "displayInvalidJson";
 
-        private void Parse(ParserTabViewModel vm, object parameter)
+        private void Parse(ValidatorTabViewModel vm, object parameter)
         {
             try
             {
                 var webBrowser = ((WebBrowser)parameter);
 
                 string jsonErrorHtml;
-                if (JsonParser.IsJsonValid(JsonToParse, out jsonErrorHtml))
+                string errorMessage;
+                if (JsonValidator.IsJsonValid(JsonToParse, out jsonErrorHtml, out errorMessage))
                 {
                     webBrowser.InvokeScript(DisplayValidJsonFunctionName, JsonToParse);
                 }
                 else
                 {
-                    webBrowser.InvokeScript(DisplayInvalidJsonFunctionName, jsonErrorHtml);
+                    webBrowser.InvokeScript(DisplayInvalidJsonFunctionName, jsonErrorHtml, errorMessage);
                 }
             }
             catch (Exception e)
@@ -76,7 +77,7 @@ namespace Marss.JsonViewer.ViewModels
             }
         }
 
-        private bool CanParse(ParserTabViewModel vm, object parameter)
+        private bool CanParse(ValidatorTabViewModel vm, object parameter)
         {
             var browser = parameter as WebBrowser;
             return browser != null && browser.IsLoaded && !string.IsNullOrWhiteSpace(vm.JsonToParse);
