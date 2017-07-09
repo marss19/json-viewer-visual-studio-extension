@@ -13,9 +13,12 @@ namespace Marss.JsonViewer.ViewModels
 
         public TabsViewModel()
         {
-            Tabs = new ObservableCollection<TabViewModelBase>();
-            Tabs.Add(new DefaultViewerTabViewModel());
-            Tabs.Add(new ComparerTabViewModel());
+            Tabs = new ObservableCollection<TabViewModelBase>()
+            {
+                new DefaultViewerTabViewModel(),
+                new ComparerTabViewModel(),
+                new ValidatorTabViewModel()
+            };
         }
 
         

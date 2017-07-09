@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Marss.JsonViewer.Views.ValidatorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Marss.JsonViewer.Views"
+             xmlns:utils="clr-namespace:Marss.JsonViewer.ViewModels.Utils"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel LastChildFill="True">
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding ParseCommand}" CommandParameter="{Binding Path=., ElementName=Browser}">
+                <TextBlock Margin="3 0">Validate</TextBlock>
+            </Button>
+            <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON data:</TextBlock>
+        </DockPanel>
+
+        <TextBox TextWrapping="{Binding TextWrapping, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Grid.Row="1"
+                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
+                 Text="{Binding JsonToParse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
+
+        <DockPanel Grid.Column="1" LastChildFill="False">
+            <CheckBox DockPanel.Dock="Right" Grid.Column="1" 
+                      IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"
+                      Command="{Binding WordWrapCommand}" CommandParameter="{Binding Path=., ElementName=Browser}"></CheckBox>
+            <TextBlock DockPanel.Dock="Right" Margin="3">Word Wrap</TextBlock>
+        </DockPanel>
+  
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="LightGray" BorderThickness="1" Margin="3">
+            <WebBrowser x:Name="Browser" utils:WebBrowserUtility.BindableSource="{Binding ResourcePath}"></WebBrowser>
+        </Border>
+
+    </Grid>
+</UserControl>
