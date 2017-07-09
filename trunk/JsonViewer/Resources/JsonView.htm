@@ -40,13 +40,14 @@
                     _formatAsUsual(divViewer, obj);
                 }
             } catch (e) {
-                alert("Failed to parse JSON data. Error: " + e.message);
+                alert("Failed to parse JSON data. Correct it first using the Validator tab. Error: " + e.message);
             }
         }
 
         function _formatAsUsual(parentControl, obj) {
             var pre = $("<pre>");
-            pre.html(JSON.stringify(obj, null, "\t"));
+            var text = JSON.stringify(obj, null, "\t");
+            pre.html(_htmlEncode(text));
             parentControl.append(pre);
         }
 
@@ -59,7 +60,7 @@
         }
 
         function _renderItemOfSimpleType(parentControl, name, value) {
-            parentControl.append("<li><b>" + name + "</b>: " + value + "</li>");
+            parentControl.append("<li><b>" + name + "</b>: " + _htmlEncode(value) + "</li>");
         }
 
         function _renderObject(parentControl, name, obj) {
@@ -85,6 +86,10 @@
             }
             var type = typeof value;
             return (type === "string" || type === "number" || type === "boolean");
+        }
+
+        function _htmlEncode(text) {
+            return text.replace(/[<]/g, "&lt;").replace(/[>]/g, "&gt;");
         }
 
 
