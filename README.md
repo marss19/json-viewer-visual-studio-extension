@@ -1,6 +1,7 @@
 # JSON Viewer - Visual Studio Extension
 
 This is a simple Visual Studio extension displaying JSON data in more user-friendly format. After installation it is available in the main menu: Tools -&gt; JSON Viewer.
+
 **Features:**
 - ability to print formatted data
 - ability to format input data keeping JSON markup and omitting it
