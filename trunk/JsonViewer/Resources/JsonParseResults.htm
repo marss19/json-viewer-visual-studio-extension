@@ -9,10 +9,6 @@
             font-size: 12px;
         }
 
-        pre {
-            word-wrap: break-word;
-        }
-
         #summary {
             border-bottom: dotted 1px #7b4f9d;
             color: #7b4f9d;
@@ -28,13 +24,16 @@
     <script>
 
 
-        function displaValidJson(dataAsText) {
+        function displaValidJson(dataAsText, wordWrap) {
 
             var container = $("<pre>");
+            if (wordWrap)
+                container.css("word-wrap", "break-word");
             try {
                 var obj = $.parseJSON(dataAsText);
                 var text = JSON.stringify(obj, null, "\t");
-                container.text(dataAsText)
+                var dataAsHtml = text.replace(/[<]/g, "&lt;").replace(/[>]/g, "&gt;");
+                container.html(dataAsHtml)
                 _display("JSON is correct.", container);
             } catch (e) {
                 container.text(e.message)
@@ -43,8 +42,10 @@
 
         };
 
-        function displayInvalidJson(dataAsHtml, errorMessage) {
+        function displayInvalidJson(dataAsHtml, errorMessage, wordWrap) {
             var container = $("<pre>");
+            if (wordWrap)
+                container.css("word-wrap", "break-word");
             container.html(dataAsHtml);
             _display(errorMessage, container);
         };

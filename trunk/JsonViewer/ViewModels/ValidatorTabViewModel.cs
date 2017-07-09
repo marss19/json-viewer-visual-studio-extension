@@ -17,8 +17,10 @@ namespace Marss.JsonViewer.ViewModels
         {
              Header = "Validator";
              ResourcePath = "Marss.JsonViewer.Resources.JsonParseResults.htm";
+             WordWrap = true;
 
              ParseCommand = new GenericCommand<ValidatorTabViewModel, object>(this, Parse, CanParse);
+             WordWrapCommand = new GenericCommand<ValidatorTabViewModel, object>(this, ChangeWordWrap, (vm, p) => true);
         }
 
 
@@ -33,9 +35,26 @@ namespace Marss.JsonViewer.ViewModels
             set { SetProperty(ref _jsonToParse, value, "JsonToParse"); }
         }
 
+        public bool WordWrap
+        {
+            get { return _wordWrap; }
+            set
+            {
+                SetProperty(ref _wordWrap, value, "WordWrap");
+                TextWrapping = _wordWrap ? TextWrapping.Wrap : TextWrapping.NoWrap;
+            }
+        }
+
+        public TextWrapping TextWrapping
+        {
+            get { return _textWrapping; }
+            private set { SetProperty(ref _textWrapping, value, "TextWrapping"); }
+        }
+
         public string ResourcePath { get; private set; }
 
         public ICommand ParseCommand { get; private set; }
+        public ICommand WordWrapCommand { get; private set; }
 
         public override bool CanBeRemoved
         {
@@ -51,6 +70,8 @@ namespace Marss.JsonViewer.ViewModels
         #region private
 
         private string _jsonToParse;
+        private bool _wordWrap;
+        private TextWrapping _textWrapping;
         private const string DisplayValidJsonFunctionName = "displaValidJson";
         private const string DisplayInvalidJsonFunctionName = "displayInvalidJson";
 
@@ -64,11 +85,11 @@ namespace Marss.JsonViewer.ViewModels
                 string errorMessage;
                 if (JsonValidator.IsJsonValid(JsonToParse, out jsonErrorHtml, out errorMessage))
                 {
-                    webBrowser.InvokeScript(DisplayValidJsonFunctionName, JsonToParse);
+                    webBrowser.InvokeScript(DisplayValidJsonFunctionName, JsonToParse, WordWrap);
                 }
                 else
                 {
-                    webBrowser.InvokeScript(DisplayInvalidJsonFunctionName, jsonErrorHtml, errorMessage);
+                    webBrowser.InvokeScript(DisplayInvalidJsonFunctionName, jsonErrorHtml, errorMessage, WordWrap);
                 }
             }
             catch (Exception e)
@@ -81,6 +102,12 @@ namespace Marss.JsonViewer.ViewModels
         {
             var browser = parameter as WebBrowser;
             return browser != null && browser.IsLoaded && !string.IsNullOrWhiteSpace(vm.JsonToParse);
+        }
+
+        private void ChangeWordWrap(ValidatorTabViewModel vm, object parameter)
+        {
+            if (CanParse(vm, parameter))
+                Parse(vm, parameter);
         }
 
         #endregion

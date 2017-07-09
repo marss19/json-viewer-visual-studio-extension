@@ -24,11 +24,17 @@
             <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON data:</TextBlock>
         </DockPanel>
 
-        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="1"
-                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+        <TextBox TextWrapping="{Binding TextWrapping, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" Grid.Row="1"
+                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
                  Text="{Binding JsonToParse, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
-      
 
+        <DockPanel Grid.Column="1" LastChildFill="False">
+            <CheckBox DockPanel.Dock="Right" Grid.Column="1" 
+                      IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"
+                      Command="{Binding WordWrapCommand}" CommandParameter="{Binding Path=., ElementName=Browser}"></CheckBox>
+            <TextBlock DockPanel.Dock="Right" Margin="3">Word Wrap</TextBlock>
+        </DockPanel>
+  
         <Border Grid.Row="1" Grid.Column="1" BorderBrush="LightGray" BorderThickness="1" Margin="3">
             <WebBrowser x:Name="Browser" utils:WebBrowserUtility.BindableSource="{Binding ResourcePath}"></WebBrowser>
         </Border>
