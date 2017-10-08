@@ -10,6 +10,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -18,7 +19,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Margin="3"
+                   Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   Foreground="Black" Background="Khaki" TextWrapping="Wrap" HorizontalAlignment="Left"></TextBlock>
+
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
             <Button Margin="3" Command="{Binding CompareFormattedCommand}">
                 <TextBlock Margin="3 0">Format &amp; Compare</TextBlock>
             </Button>
@@ -27,15 +32,15 @@
             </Button>
         </StackPanel>
 
-        <TextBox HorizontalAlignment="Stretch" Grid.Row="1"
+        <TextBox HorizontalAlignment="Stretch" Grid.Row="2"
                  Text="{Binding Json1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
-        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="2"
+        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="3"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  Text="{Binding Json1Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
 
-        <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="1"
+        <TextBox HorizontalAlignment="Stretch" Grid.Column="1" Grid.Row="2"
                  Text="{Binding Json2Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
-        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Grid.Row="2"
+        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Column="1" Grid.Row="3"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  Text="{Binding Json2Content, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
     </Grid>
