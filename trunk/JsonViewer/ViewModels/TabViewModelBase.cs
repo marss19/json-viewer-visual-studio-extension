@@ -36,6 +36,12 @@ namespace Marss.JsonViewer.ViewModels
         }
 
 
+        public string Message
+        {
+            get { return _message; }
+            set { SetProperty(ref _message, value, "Message"); }
+        }
+
         public abstract string UserControlName { get; }
         public abstract bool CanBeRemoved { get; }
         public abstract bool Editable { get; }
@@ -95,6 +101,7 @@ namespace Marss.JsonViewer.ViewModels
 
         private UserControl _userControl;
         private string _header;
+        private string _message;
 
         #endregion
 

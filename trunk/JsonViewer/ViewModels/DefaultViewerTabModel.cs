@@ -1,4 +1,6 @@
 ﻿using Marss.JsonViewer.ViewModels.Utils;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Marss.JsonViewer.ViewModels
 {
@@ -15,7 +19,6 @@ namespace Marss.JsonViewer.ViewModels
         public DefaultViewerTabViewModel()
         {
             Header = "Formatter";
-            ResourcePath = "Marss.JsonViewer.Resources.JsonView.htm";
 
             FormatHumanFriendlyCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, FormatHumanFriendly, CanFormat);
             FormatProgrammerFriendlyCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, FormatProgrammerFriendly, CanFormat);
@@ -35,7 +38,11 @@ namespace Marss.JsonViewer.ViewModels
             set { SetProperty(ref _unformattedJson, value, "UnformattedJson"); }
         }
 
-        public string ResourcePath { get; private set; }
+        public string FormattedJson
+        {
+            get { return _formattedJson; }
+            set { SetProperty(ref _formattedJson, value, "FormattedJson"); }
+        }
 
         public ICommand FormatHumanFriendlyCommand { get; private set; }
         public ICommand FormatProgrammerFriendlyCommand { get; private set; }
@@ -55,48 +62,50 @@ namespace Marss.JsonViewer.ViewModels
         #region private
 
         private string _unformattedJson;
+        private string _formattedJson;
 
-        private void Format(WebBrowser webBrowser, string javascriptFunctionName)
+        private void Format(bool humanFriendly)
         {
+            FormattedJson = "";
             try
             {
-                webBrowser.InvokeScript(javascriptFunctionName, UnformattedJson);
+                FormattedJson = JToken.Parse(UnformattedJson).ToString(Newtonsoft.Json.Formatting.Indented);
+                Message = "";
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error while executing Javascript: " + e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Message = $"Failed to format. {e.Message}";
             }
         }
 
 
         private void FormatHumanFriendly(DefaultViewerTabViewModel vm, object parameter)
         {
-            Format((WebBrowser)parameter, "customFormat");
+           // Format(true);
         }
 
         private void FormatProgrammerFriendly(DefaultViewerTabViewModel vm, object parameter)
         {
-            Format((WebBrowser)parameter, "defaultFormat");
+            Format(false);
         }
 
         private bool CanFormat(DefaultViewerTabViewModel vm, object parameter)
         {
-            var browser = parameter as WebBrowser;
-            return browser != null && browser.IsLoaded && !string.IsNullOrWhiteSpace(vm.UnformattedJson);
+            return !string.IsNullOrWhiteSpace(vm.UnformattedJson);
         }
-
 
         private void Print(DefaultViewerTabViewModel vm, object parameter)
         {
-            var doc = ((WebBrowser)parameter).Document as mshtml.IHTMLDocument2;
-            if (doc != null)
-                doc.execCommand("Print", true, null);
+            var doc = new FlowDocument(new Paragraph(new Run(FormattedJson)));
+            doc.PagePadding = new Thickness(100);
+
+            var printDlg = new PrintDialog();
+            printDlg.PrintDocument(((IDocumentPaginatorSource)doc).DocumentPaginator, "JSON Viewer");
         }
 
         private bool CanPrint(DefaultViewerTabViewModel vm, object parameter)
         {
-            var browser = parameter as WebBrowser;
-            return browser != null ? browser.IsLoaded : false;
+            return !string.IsNullOrWhiteSpace(vm.FormattedJson); 
         }
 
         #endregion

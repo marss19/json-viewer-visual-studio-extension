@@ -53,12 +53,6 @@ namespace Marss.JsonViewer.ViewModels
             set { SetProperty(ref _results, value, "Results"); }
         }
 
-        public string Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value, "Message"); }
-        }
-
         public void TextPasted()
         {
             _textPasted = true;
@@ -80,7 +74,6 @@ namespace Marss.JsonViewer.ViewModels
         #region private
 
         private string _source;
-        private string _message;
         private string _expression;
         private IEnumerable<string> _results;
         private bool _textPasted;

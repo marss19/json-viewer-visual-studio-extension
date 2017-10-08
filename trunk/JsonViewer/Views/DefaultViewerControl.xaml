@@ -11,29 +11,36 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" LastChildFill="True">
-            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding PrintCommand}" CommandParameter="{Binding Path=., ElementName=Browser}">
+        <TextBlock Grid.Row="0" Margin="3"
+                   Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   Foreground="Black" Background="Khaki" TextWrapping="Wrap" HorizontalAlignment="Left"></TextBlock>
+
+        <DockPanel Grid.Row="1" LastChildFill="True">
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding PrintCommand}">
                 <TextBlock Margin="3 0">Print</TextBlock>
             </Button>
-            <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}" CommandParameter="{Binding Path=., ElementName=Browser}">
+            <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}">
                 <TextBlock Margin="3 0">Programmer-friendly Format</TextBlock>
             </Button>
-            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FormatHumanFriendlyCommand}" CommandParameter="{Binding Path=., ElementName=Browser}">
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FormatHumanFriendlyCommand}">
                 <TextBlock Margin="3 0">Human-friendly Format</TextBlock>
             </Button>
             <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON data:</TextBlock>
         </DockPanel>
 
-        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="1"  Height="100"
+        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="2"  Height="100"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  Text="{Binding UnformattedJson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
 
-        <Border Grid.Row="2"  BorderBrush="LightGray" BorderThickness="1" Margin="3">
-            <WebBrowser x:Name="Browser" utils:WebBrowserUtility.BindableSource="{Binding ResourcePath}"></WebBrowser>
-        </Border>
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <Border Grid.Row="3" Margin="3" BorderBrush="LightGray" BorderThickness="1">
+                <TextBlock Text="{Binding FormattedJson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+            </Border>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

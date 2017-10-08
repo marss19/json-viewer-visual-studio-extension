@@ -49,12 +49,6 @@ namespace Marss.JsonViewer.ViewModels
             set { SetProperty(ref _json2Content, value, "Json2Content"); }
         }
 
-        public string Message
-        {
-            get { return _message; }
-            set { SetProperty(ref _message, value, "Message"); }
-        }
-
         public ICommand CompareCommand { get; private set; }
         public ICommand CompareFormattedCommand { get; private set; }
 
@@ -80,8 +74,6 @@ namespace Marss.JsonViewer.ViewModels
 
         public string _json2Name;
         public string _json2Content;
-
-        private string _message;
 
         private void Compare(ComparerTabViewModel vm, object parameter)
         {
