@@ -116,6 +116,9 @@
       <HintPath>..\packages\Microsoft.VisualStudio.Validation.14.1.111\lib\net45\Microsoft.VisualStudio.Validation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -190,6 +193,7 @@
     <Compile Include="Services\JsonValidator.cs" />
     <Compile Include="ViewModels\ComparerTabViewModel.cs" />
     <Compile Include="ViewModels\DefaultViewerTabModel.cs" />
+    <Compile Include="ViewModels\JsonPathEvaluatorTabViewModel.cs" />
     <Compile Include="ViewModels\ValidatorTabViewModel.cs" />
     <Compile Include="ViewModels\TabsViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
@@ -197,6 +201,9 @@
     <Compile Include="ViewModels\Utils\WebBrowserUtility.cs" />
     <Compile Include="Views\ComparerControl.xaml.cs">
       <DependentUpon>ComparerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JsonPathEvaluatorControl.xaml.cs">
+      <DependentUpon>JsonPathEvaluatorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ValidatorControl.xaml.cs">
       <DependentUpon>ValidatorControl.xaml</DependentUpon>
@@ -245,6 +252,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ComparerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JsonPathEvaluatorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
