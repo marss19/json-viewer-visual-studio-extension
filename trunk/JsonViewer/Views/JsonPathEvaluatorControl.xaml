@@ -11,37 +11,32 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Margin="3"
-                   Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                   Foreground="Black" Background="Khaki" TextWrapping="Wrap" HorizontalAlignment="Left"></TextBlock>
-   
-        <DockPanel Grid.Row="1" LastChildFill="True">
+  
+        <DockPanel Grid.Row="0" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FindCommand}">
                 <TextBlock Margin="3 0">Search</TextBlock>
             </Button>
             <TextBlock Margin="3" HorizontalAlignment="Left">JSONPath expression:</TextBlock>
         </DockPanel>
         
-        <TextBox Grid.Row="2" HorizontalAlignment="Stretch" Margin="3"
+        <TextBox Grid.Row="1" HorizontalAlignment="Stretch" Margin="3"
                  Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-        <TextBlock Grid.Row="3" Margin="3" HorizontalAlignment="Left">Input JSON:</TextBlock>
+        <TextBlock Grid.Row="2" Margin="3" HorizontalAlignment="Left">Input JSON:</TextBlock>
 
         <TextBox TextWrapping="{Binding TextWrapping, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"
-                 Grid.Row="4" HorizontalAlignment="Stretch" Margin="3" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
+                 Grid.Row="3" HorizontalAlignment="Stretch" Margin="3" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
                  Text="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="tbInput"></TextBox>
 
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" HorizontalAlignment="Left">Search results:</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left">Search results:</TextBlock>
 
-        <ScrollViewer Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" VerticalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding Path=Results, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

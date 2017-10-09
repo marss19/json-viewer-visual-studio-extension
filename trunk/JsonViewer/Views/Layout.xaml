@@ -30,7 +30,11 @@
         </TabControl.ItemTemplate>
         <TabControl.ContentTemplate>
             <DataTemplate >
-                <ContentControl Content="{Binding UserControl}"/>
+                <DockPanel LastChildFill="True">
+                    <TextBlock DockPanel.Dock="Top" Foreground="Black" Background="Khaki" TextWrapping="Wrap" HorizontalAlignment="Left"
+                         Text="{Binding Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                    <ContentControl Content="{Binding UserControl}"/>
+                </DockPanel>
             </DataTemplate>
         </TabControl.ContentTemplate>
     </TabControl>
