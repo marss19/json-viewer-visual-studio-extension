@@ -99,7 +99,7 @@ namespace Marss.JsonViewer.ViewModels
             }
             catch(Exception e)
             {
-                Message = $"{e.Message} Correct JSON or compare without preliminary formatting. ";
+                Message = $" {e.Message} Correct JSON or compare without preliminary formatting. ";
                 return;
             }
 
@@ -110,7 +110,7 @@ namespace Marss.JsonViewer.ViewModels
             }
             catch (Exception e)
             {
-                Message = $"Failed to compare JSONs. {e.Message} ";
+                Message = $" Failed to compare JSONs. {e.Message} ";
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using Marss.JsonViewer.ViewModels.Utils;
+﻿using Marss.JsonViewer.Services;
+using Marss.JsonViewer.ViewModels.Utils;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -37,11 +38,11 @@ namespace Marss.JsonViewer.ViewModels
             get { return _source; }
             set
             {
-                var jToken = ValidateJson(value);
+                ValidateJson(value);
                 if (_textPasted) //format text if it is pasted
                 {
                     _textPasted = false;
-                    value = jToken != null ? jToken.ToString() : value;
+                    value = JsonFormatter.FormatIfPossible(value);
                 }
                 SetProperty(ref _source, value, "Source");
             }
@@ -101,19 +102,17 @@ namespace Marss.JsonViewer.ViewModels
             return !string.IsNullOrWhiteSpace(vm.Source) && !string.IsNullOrWhiteSpace(vm.Expression);
         }
 
-        private JToken ValidateJson(string text)
+        private void ValidateJson(string text)
         {
-            JToken jToken = null;
             try
             {
-                jToken = JToken.Parse(text);
+                JToken.Parse(text);
                 Message = "";
             }
             catch (Exception ex)
             {
                 Message = $" Invalid JSON. {ex.Message} ";
             }
-            return jToken;
         }
 
         #endregion

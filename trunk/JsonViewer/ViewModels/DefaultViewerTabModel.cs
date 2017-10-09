@@ -1,4 +1,5 @@
-﻿using Marss.JsonViewer.ViewModels.Utils;
+﻿using Marss.JsonViewer.Services;
+using Marss.JsonViewer.ViewModels.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 
 namespace Marss.JsonViewer.ViewModels
 {
+
     public class DefaultViewerTabViewModel : TabViewModelBase
     {
         public DefaultViewerTabViewModel()
@@ -66,16 +68,9 @@ namespace Marss.JsonViewer.ViewModels
 
         private void Format(bool humanFriendly)
         {
-            FormattedJson = "";
-            try
-            {
-                FormattedJson = JToken.Parse(UnformattedJson).ToString(Newtonsoft.Json.Formatting.Indented);
-                Message = "";
-            }
-            catch (Exception e)
-            {
-                Message = $"Failed to format. {e.Message}";
-            }
+            string errorMessage;
+            FormattedJson = JsonFormatter.FormatIfPossible(UnformattedJson, out errorMessage);
+            Message = errorMessage != null ? $" Failed to format. {errorMessage} " : "";
         }
 
 
