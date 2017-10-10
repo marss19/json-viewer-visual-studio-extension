@@ -17,7 +17,6 @@ namespace Marss.JsonViewer.ViewModels
             {
                 new DefaultViewerTabViewModel(),
                 new ComparerTabViewModel(),
-                new ValidatorTabViewModel(),
                 new JsonPathEvaluatorTabViewModel()
             };
         }

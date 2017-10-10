@@ -124,9 +124,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Json, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Json.4.4.0-preview2-25405-01\lib\netstandard1.0\System.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="PresentationCore" />
@@ -190,23 +187,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PkgCmdID.cs" />
     <Compile Include="Services\JsonFormatter.cs" />
-    <Compile Include="Services\JsonValidator.cs" />
     <Compile Include="ViewModels\ComparerTabViewModel.cs" />
     <Compile Include="ViewModels\DefaultViewerTabModel.cs" />
     <Compile Include="ViewModels\JsonPathEvaluatorTabViewModel.cs" />
-    <Compile Include="ViewModels\ValidatorTabViewModel.cs" />
     <Compile Include="ViewModels\TabsViewModel.cs" />
     <Compile Include="ViewModels\TabViewModelBase.cs" />
     <Compile Include="ViewModels\Utils\GenericCommand.cs" />
-    <Compile Include="ViewModels\Utils\WebBrowserUtility.cs" />
     <Compile Include="Views\ComparerControl.xaml.cs">
       <DependentUpon>ComparerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\JsonPathEvaluatorControl.xaml.cs">
       <DependentUpon>JsonPathEvaluatorControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ValidatorControl.xaml.cs">
-      <DependentUpon>ValidatorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DefaultViewerControl.xaml.cs">
       <DependentUpon>DefaultViewerControl.xaml</DependentUpon>
@@ -246,8 +237,6 @@
     <None Include="Resources\Images.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\JsonView.htm" />
-    <EmbeddedResource Include="Resources\JsonParseResults.htm" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -258,10 +247,6 @@
     <Page Include="Views\JsonPathEvaluatorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ValidatorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DefaultViewerControl.xaml">
       <SubType>Designer</SubType>

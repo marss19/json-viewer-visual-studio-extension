@@ -30,9 +30,13 @@ namespace Marss.JsonViewer.Services
                 return json;
             }
         }
+        #region private
 
         private static string Format(string json)
         {
+            if (string.IsNullOrEmpty(json))
+                return json;
+
             var token = JToken.Parse(json);
 
             var sb = new StringBuilder();
@@ -52,5 +56,6 @@ namespace Marss.JsonViewer.Services
             }
         }
 
+        #endregion
     }
 }
