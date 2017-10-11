@@ -16,15 +16,18 @@ Download the latest release from Visual Studio Marketplace: https://marketplace.
 ![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-general.png)
 
 
-##### Screenshot 4. Validation.
+
+##### Screenshot 2. Validation.
 ![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jw-validator.png)
+
 
 
 ##### Screenshot 3. Comparison of JSONs.
 ![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jw-compare.png)
 
 
-##### Screenshot 2. JSONPath expressions evaluation.
+
+##### Screenshot 4. JSONPath expressions evaluation.
 ![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-jsonpath.png)
 
 
