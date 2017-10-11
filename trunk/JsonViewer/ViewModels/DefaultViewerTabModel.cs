@@ -102,12 +102,12 @@ namespace Marss.JsonViewer.ViewModels
             var match = re.Match(erroMessage);
             if (match.Success)
             {
-                line = int.Parse(match.Groups["line"].Value) - 1;
-                column = int.Parse(match.Groups["column"].Value) - 1;
+                line = int.Parse(match.Groups["line"].Value);
+                column = int.Parse(match.Groups["column"].Value);
 
-                //there is a bug: the column is not a zero-based index but somethemes it shows "0"
-                if (column < 1)
-                    column = 1;
+                //the column and the line are not a zero-based indexes but somethemes they show "0"
+                if (line > 0) line--;
+                if (column > 0) column--;
             }
             return match.Success;
         }
@@ -125,18 +125,47 @@ namespace Marss.JsonViewer.ViewModels
                     var pos = match.Length;
 
                     //hightlight few more characters after the indicated error position
-                    var end = pos + 10 < json.Length ? pos + 10 : pos;
-                    while (char.IsWhiteSpace(json[end]) && end < json.Length)
+                    var end = pos;
+                    var count = 5;
+                    while (count > 0 && end < json.Length)
+                    {
+                        if (!char.IsWhiteSpace(json[end]))
+                            count--;
                         end++;
+                    }
 
                     //hightlight few more characters before the indicated error position; move to the previous row if needed 
-                    var start = pos >= 10 ? pos - 10 : 0;
-                    while (char.IsWhiteSpace(json[start]) && start > 0)
+                    var start = pos;
+                    count = 5;
+                    while (count > 0 && start > 0)
+                    {
+                        if (!char.IsWhiteSpace(json[start]))
+                            count--;
                         start--;
+                    }
 
                     tb.Focus();
                     tb.Select(start, end - start);
+                }
+                else
+                {
+                    var totalLinesCount = json.Split('\n').Count();
+                    //sometimes line number is bigger that actual count of lines,
+                    //e.g. in cases when the closing bracket is missed
+                    if (line >= totalLinesCount)
+                    {
+                        var start = json.Length - 1;
+                        var count = 5;
+                        while (count > 0 && start > 0)
+                        {
+                            if (!char.IsWhiteSpace(json[start]))
+                                count--;
+                            start--;
+                        }
 
+                        tb.Focus();
+                        tb.Select(start, json.Length - start);
+                    }
                 }
             }
 
