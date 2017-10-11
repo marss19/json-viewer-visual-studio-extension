@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="c21a2a7b-7b1c-45c9-bee3-3bdc0715bdc9" Version="1.1.1" Language="en-US" Publisher="Mykola Tarasyuk" />
+        <Identity Id="c21a2a7b-7b1c-45c9-bee3-3bdc0715bdc9" Version="1.1.2" Language="en-US" Publisher="Mykola Tarasyuk" />
         <DisplayName>JSON Viewer</DisplayName>
-        <Description xml:space="preserve">A tool to format JSON to a friendly view, compare and print formatted results</Description>
+        <Description xml:space="preserve">A tool to format JSON to a friendly view, compare and print formatted results, evaluate JSONPath expressions</Description>
         <License>Resources\license.md</License>
     </Metadata>
     <Installation InstalledByMsi="false">

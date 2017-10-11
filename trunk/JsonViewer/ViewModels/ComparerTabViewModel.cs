@@ -1,5 +1,6 @@
 ﻿using Marss.JsonViewer.Services;
 using Marss.JsonViewer.ViewModels.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,24 +80,37 @@ namespace Marss.JsonViewer.ViewModels
             try
             {
                 JsonComparer.Compare(vm.Json1Content, vm.Json1Name, vm.Json2Content, vm.Json2Name);
+                Message = "";
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error while comparing JSONs: " + e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Message = $"Failed to compare JSONs. {e.Message} ";
             }
         }
 
         private void CompareFormatted(ComparerTabViewModel vm, object parameter)
         {
+            string formattedJsonl;
+            string formattedJson2;
             try
             {
-                var formattedJsonl = JsonFormatter.Format(vm.Json1Content, vm.Json1Name);
-                var formattedJson2 = JsonFormatter.Format(vm.Json2Content, vm.Json2Name);
+                formattedJsonl = Format(vm.Json1Content, vm.Json1Name);
+                formattedJson2 = Format(vm.Json2Content, vm.Json2Name);
+            }
+            catch(Exception e)
+            {
+                Message = $" {e.Message} Correct JSON or compare without preliminary formatting. ";
+                return;
+            }
+
+            try
+            {
                 JsonComparer.Compare(formattedJsonl, vm.Json1Name, formattedJson2, vm.Json2Name);
+                Message = "";
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error while comparing formatted JSONs: " + e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Message = $" Failed to compare JSONs. {e.Message} ";
             }
         }
 
@@ -106,6 +120,18 @@ namespace Marss.JsonViewer.ViewModels
                 && !string.IsNullOrWhiteSpace(vm.Json1Content)
                 && !string.IsNullOrWhiteSpace(vm.Json2Name)
                 && !string.IsNullOrWhiteSpace(vm.Json2Content);
+        }
+
+        private string Format(string json, string jsonName)
+        {
+            try
+            {
+                return JToken.Parse(json).ToString();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to format {jsonName}. {ex.Message}");
+            }
         }
 
         #endregion

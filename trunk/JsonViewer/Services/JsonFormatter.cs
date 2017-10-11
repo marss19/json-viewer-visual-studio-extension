@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,84 +11,51 @@ namespace Marss.JsonViewer.Services
 {
     public class JsonFormatter
     {
-        public static string Format(string input, string inputName)
+        public static string FormatIfPossible(string json)
         {
+            string errorMessage;
+            return FormatIfPossible(json, out errorMessage);
+        }
+
+        public static string FormatIfPossible(string json, out string errorMessage)
+        {
+            errorMessage = null;
             try
             {
-                return Stringify(input);
+                return Format(json);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                throw new Exception(string.Format("Failed to format {0}. Error: {1}", inputName, ex.Message));
+                errorMessage = ex.Message;
+                return json;
             }
         }
+        #region private
 
-        private static string Stringify(string unformattedJson)
+        private static string Format(string json)
         {
-            var indent = 0;
-            var quoted = false;
+            if (string.IsNullOrEmpty(json))
+                return json;
+
+            var token = JToken.Parse(json);
+
             var sb = new StringBuilder();
-
-            for (var i = 0; i < unformattedJson.Length; i++)
+            using (var sw = new StringWriter(sb))
             {
-                var c = unformattedJson[i];
-                switch (c)
+                using (var jw = new JsonTextWriter(sw))
                 {
-                    case '{':
-                    case '[':
-                        sb.Append(c);
-                        if (!quoted)
-                        {
-                            sb.AppendLine();
-                            sb.Append('\t', ++indent);
-                        }
-                        break;
+                    jw.Formatting = Formatting.Indented;
+                    jw.Indentation = 4;
+                    jw.IndentChar = ' ';
 
-                    case '}':
-                    case ']':
-                        if (!quoted)
-                        {
-                            sb.AppendLine();
-                            sb.Append('\t', --indent);
-                        }
-                        sb.Append(c);
-                        break;
+                    var serializer = new JsonSerializer();
+                    serializer.Serialize(jw, token);
 
-                    case '"':
-                        sb.Append(c);
-                        bool escaped = false;
-                        var index = i;
-                        while (index > 0 && unformattedJson[--index] == '\\')
-                            escaped = !escaped;
-                        if (!escaped)
-                            quoted = !quoted;
-                        break;
-
-                    case ',':
-                        sb.Append(c);
-                        if (!quoted)
-                        {
-                            sb.AppendLine();
-                            sb.Append('\t', indent);
-                        }
-                        break;
-
-                    case ':':
-                        sb.Append(c);
-                        if (!quoted)
-                            sb.Append(" ");
-                        break;
-
-                    default:
-                        if (quoted || !char.IsWhiteSpace(c))
-                        {
-                            sb.Append(c);
-                        }
-                        break;
+                    return sb.ToString();
                 }
             }
-
-            return sb.ToString();
         }
+
+        #endregion
     }
 }

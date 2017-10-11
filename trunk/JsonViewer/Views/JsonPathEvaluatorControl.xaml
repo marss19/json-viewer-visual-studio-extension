@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="Marss.JsonViewer.Views.JsonPathEvaluatorControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Marss.JsonViewer.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+  
+        <DockPanel Grid.Row="0" LastChildFill="True">
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FindCommand}">
+                <TextBlock Margin="3 0">Search</TextBlock>
+            </Button>
+            <TextBlock Margin="3" HorizontalAlignment="Left">JSONPath expression:</TextBlock>
+        </DockPanel>
+        
+        <TextBox Grid.Row="1" HorizontalAlignment="Stretch" Margin="3"
+                 Text="{Binding Expression, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+        <TextBlock Grid.Row="2" Margin="3" HorizontalAlignment="Left">Input JSON:</TextBlock>
+
+        <TextBox TextWrapping="{Binding TextWrapping, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True"
+                 Grid.Row="3" HorizontalAlignment="Stretch" Margin="3" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
+                 Text="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Name="tbInput"></TextBox>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left">Search results:</TextBlock>
+
+        <ScrollViewer Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding Path=Results, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="5" BorderBrush="LightGray" BorderThickness="1">
+                            <TextBlock Text="{Binding}"></TextBlock>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
+    </Grid>
+</UserControl>
