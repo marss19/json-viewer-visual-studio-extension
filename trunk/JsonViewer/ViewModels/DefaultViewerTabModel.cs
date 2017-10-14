@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,7 +14,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
+using System.Xml;
 
 namespace Marss.JsonViewer.ViewModels
 {
@@ -24,6 +28,8 @@ namespace Marss.JsonViewer.ViewModels
             Header = "Formatter & Validator";
 
             FormatProgrammerFriendlyCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, FormatProgrammerFriendly, CanFormat);
+            FormatHumanFriendlyCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, FormatHumanFriendly, CanFormat);
+
             PrintCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, Print, CanPrint);
         }
 
@@ -39,13 +45,8 @@ namespace Marss.JsonViewer.ViewModels
             set { SetProperty(ref _unformattedJson, value, "UnformattedJson"); }
         }
 
-        public string FormattedJson
-        {
-            get { return _formattedJson; }
-            set { SetProperty(ref _formattedJson, value, "FormattedJson"); }
-        }
-
         public ICommand FormatProgrammerFriendlyCommand { get; private set; }
+        public ICommand FormatHumanFriendlyCommand { get; private set; }
         public ICommand PrintCommand { get; private set; }
 
         public override bool CanBeRemoved
@@ -65,11 +66,33 @@ namespace Marss.JsonViewer.ViewModels
 
         private void FormatProgrammerFriendly(DefaultViewerTabViewModel vm, object parameter)
         {
+            var tbViewer = ((List<object>)parameter)[0] as FlowDocumentScrollViewer;
+            var tbInput = ((List<object>)parameter)[1] as TextBox;
+
             string errorMessage;
-            FormattedJson = JsonFormatter.FormatIfPossible(UnformattedJson, out errorMessage);
+            var formattedText = new JsonFormatter().FormatIfPossible(UnformattedJson, out errorMessage);
+            var doc = new FlowDocument(new Paragraph(new Run(formattedText ?? string.Empty)));
+            Format(doc, errorMessage, tbViewer, tbInput);
+        }
+
+        private void FormatHumanFriendly(DefaultViewerTabViewModel vm, object parameter)
+        {
+            var tbViewer = ((List<object>)parameter)[0] as FlowDocumentScrollViewer;
+            var tbInput = ((List<object>)parameter)[1] as TextBox;
+
+            string errorMessage;
+            var doc = new JsonCustomFormatter().FormatIfPossible(UnformattedJson, out errorMessage);
+            Format(doc, errorMessage, tbViewer, tbInput);
+        }
+
+        private void Format(FlowDocument doc, string errorMessage, FlowDocumentScrollViewer viewer, TextBox input)
+        {
+            viewer.Document = doc;
+            viewer.Document.FontSize = viewer.FontSize;
+            viewer.Document.FontFamily = viewer.FontFamily;
 
             if (!string.IsNullOrEmpty(errorMessage))
-                HighlightIncorrectJson(UnformattedJson, errorMessage, (TextBox)parameter);
+                HighlightIncorrectJson(UnformattedJson, errorMessage, input);
 
             Message = errorMessage != null ? $" Failed to format. {errorMessage} " : "";
         }
@@ -81,16 +104,34 @@ namespace Marss.JsonViewer.ViewModels
 
         private void Print(DefaultViewerTabViewModel vm, object parameter)
         {
-            var doc = new FlowDocument(new Paragraph(new Run(FormattedJson)));
-            doc.PagePadding = new Thickness(100);
+            var tbViewer = parameter as FlowDocumentScrollViewer;
+
+            //needs to be cloned to preserve the color scheme on UI
+            FlowDocument clone;
+            var str = XamlWriter.Save(tbViewer.Document);
+
+            using(var sr = new StringReader(str))
+            {
+                using(var xr = XmlReader.Create(sr))
+                {
+                    clone = (FlowDocument)XamlReader.Load(xr);
+                }
+            }
+ 
+            clone.Background = Brushes.White;
+            clone.Foreground = Brushes.Black;
 
             var printDlg = new PrintDialog();
-            printDlg.PrintDocument(((IDocumentPaginatorSource)doc).DocumentPaginator, "JSON Viewer");
+            printDlg.PrintDocument(((IDocumentPaginatorSource)clone).DocumentPaginator, "JSON Viewer");
         }
 
         private bool CanPrint(DefaultViewerTabViewModel vm, object parameter)
         {
-            return !string.IsNullOrWhiteSpace(vm.FormattedJson); 
+            if (parameter == null)
+                return false;
+
+            var tbViewer = parameter as FlowDocumentScrollViewer;
+            return tbViewer.Document != null; 
         }
 
         private  bool TryGetWrongCharacterPosition(string erroMessage, out int line, out int column)
