@@ -62,7 +62,6 @@ namespace Marss.JsonViewer.ViewModels
         #region private
 
         private string _unformattedJson;
-        private string _formattedJson;
 
         private void FormatProgrammerFriendly(DefaultViewerTabViewModel vm, object parameter)
         {
