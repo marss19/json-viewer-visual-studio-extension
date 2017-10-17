@@ -239,8 +239,12 @@
     <None Include="Resources\Images.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\icon-175x175.png" />
-    <Content Include="Resources\icon-90x90.png" />
+    <Content Include="Resources\icon-175x175.png" >
+		<IncludeInVSIX>true</IncludeInVSIX>
+	</Content>
+    <Content Include="Resources\icon-90x90.png" >
+		<IncludeInVSIX>true</IncludeInVSIX>
+	</Content>
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
