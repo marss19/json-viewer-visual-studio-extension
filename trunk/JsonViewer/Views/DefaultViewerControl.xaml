@@ -7,6 +7,9 @@
              xmlns:utils="clr-namespace:Marss.JsonViewer.ViewModels.Utils"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <utils:MultiValuesConverter x:Key="MultiValuesConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -15,15 +18,27 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" LastChildFill="True">
-            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding PrintCommand}">
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding PrintCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
                 <TextBlock Margin="3 0">Print</TextBlock>
             </Button>
-            <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}" CommandParameter="{Binding Path=., ElementName=tbInput}">
-                <TextBlock Margin="3 0">Format</TextBlock>
+            <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource MultiValuesConverter}">
+                        <Binding ElementName="tbViewer"/>
+                        <Binding ElementName="tbInput"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <TextBlock Margin="3 0">Programmer-friendly format</TextBlock>
             </Button>
-            <!--<Button DockPanel.Dock="Right" Margin="3" Command="{Binding FormatHumanFriendlyCommand}">
-                <TextBlock Margin="3 0">Human-friendly Format</TextBlock>
-            </Button>-->
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FormatHumanFriendlyCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource MultiValuesConverter}">
+                        <Binding ElementName="tbViewer"/>
+                        <Binding ElementName="tbInput"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <TextBlock Margin="3 0">Human-friendly format</TextBlock>
+            </Button>
             <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON:</TextBlock>
         </DockPanel>
 
@@ -33,13 +48,11 @@
                  Text="{Binding UnformattedJson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  Name="tbInput" Margin="3"></TextBox>
 
-
-
-        <TextBox Grid.Row="2" TextWrapping="NoWrap" IsReadOnly="True"
+        <FlowDocumentScrollViewer  Name="tbViewer" Grid.Row="2"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                 Text="{Binding FormattedJson, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" 
-                  Margin="3"></TextBox>
+                     Margin="3"
+                     ></FlowDocumentScrollViewer>
 
     </Grid>
 </UserControl>

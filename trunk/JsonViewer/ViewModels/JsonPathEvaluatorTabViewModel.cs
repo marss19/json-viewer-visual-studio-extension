@@ -42,7 +42,7 @@ namespace Marss.JsonViewer.ViewModels
                 if (_textPasted) //format text if it is pasted
                 {
                     _textPasted = false;
-                    value = JsonFormatter.FormatIfPossible(value);
+                    value = new JsonFormatter().FormatIfPossible(value);
                 }
                 SetProperty(ref _source, value, "Source");
             }
