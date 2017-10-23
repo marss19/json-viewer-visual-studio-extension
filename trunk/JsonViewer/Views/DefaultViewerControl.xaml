@@ -14,8 +14,10 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
+
 
         <DockPanel Grid.Row="0" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding PrintCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
@@ -42,17 +44,17 @@
             <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON:</TextBlock>
         </DockPanel>
 
-        <TextBox TextWrapping="Wrap" AcceptsReturn="True" Grid.Row="1"  Height="100"
+        <TextBox  Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="100"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                 VerticalScrollBarVisibility="Auto"
-                 Text="{Binding UnformattedJson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                 Name="tbInput" Margin="3"></TextBox>
+                 VerticalScrollBarVisibility="Auto" Name="tbInput" Margin="3"
+                 Text="{Binding UnformattedJson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <FlowDocumentScrollViewer  Name="tbViewer" Grid.Row="2"
+        <GridSplitter Grid.Row="2" DockPanel.Dock="Bottom" Height="1" Margin="3 1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   />
+
+        <FlowDocumentScrollViewer  Name="tbViewer" Grid.Row="3"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                     Margin="3"
-                     ></FlowDocumentScrollViewer>
+                 Margin="3"/>
 
     </Grid>
 </UserControl>
