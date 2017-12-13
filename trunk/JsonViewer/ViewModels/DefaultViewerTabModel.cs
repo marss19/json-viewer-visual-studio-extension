@@ -31,6 +31,7 @@ namespace Marss.JsonViewer.ViewModels
             FormatHumanFriendlyCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, FormatHumanFriendly, CanFormat);
 
             PrintCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, Print, CanPrint);
+            OpenFileCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, OpenFile, CanOpenFile);
         }
 
 
@@ -48,6 +49,7 @@ namespace Marss.JsonViewer.ViewModels
         public ICommand FormatProgrammerFriendlyCommand { get; private set; }
         public ICommand FormatHumanFriendlyCommand { get; private set; }
         public ICommand PrintCommand { get; private set; }
+        public ICommand OpenFileCommand { get; private set; }
 
         public override bool CanBeRemoved
         {
@@ -211,6 +213,29 @@ namespace Marss.JsonViewer.ViewModels
 
         }
 
+        private void OpenFile(DefaultViewerTabViewModel vm, object parameter)
+        {
+            var tbInput = parameter as TextBox;
+
+            string errorMessage;
+            var formattedText = new JsonFormatter().FormatIfPossible(UnformattedJson, out errorMessage);
+
+            var path = Path.GetTempFileName();
+            path = Path.ChangeExtension(path, ".json");
+            File.WriteAllText(path, formattedText);
+
+            DTEHelper.OpenFile(path);
+
+
+            var tbViewer = parameter as FlowDocumentScrollViewer;
+
+
+        }
+
+        private bool CanOpenFile(DefaultViewerTabViewModel vm, object parameter)
+        {
+            return !string.IsNullOrWhiteSpace(vm.UnformattedJson);
+        }
         #endregion
     }
 }

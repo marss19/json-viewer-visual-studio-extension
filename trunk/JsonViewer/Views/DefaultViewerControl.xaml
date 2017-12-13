@@ -23,6 +23,9 @@
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding PrintCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
                 <TextBlock Margin="3 0">Print</TextBlock>
             </Button>
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding OpenFileCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
+                <TextBlock Margin="3 0">Format &amp; open in separate tab</TextBlock>
+            </Button>
             <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}">
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource MultiValuesConverter}">
@@ -30,7 +33,7 @@
                         <Binding ElementName="tbInput"/>
                     </MultiBinding>
                 </Button.CommandParameter>
-                <TextBlock Margin="3 0">Programmer-friendly format</TextBlock>
+                <TextBlock Margin="3 0">Format programmer-friendly</TextBlock>
             </Button>
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FormatHumanFriendlyCommand}">
                 <Button.CommandParameter>
@@ -39,7 +42,7 @@
                         <Binding ElementName="tbInput"/>
                     </MultiBinding>
                 </Button.CommandParameter>
-                <TextBlock Margin="3 0">Human-friendly format</TextBlock>
+                <TextBlock Margin="3 0">Format human-friendly</TextBlock>
             </Button>
             <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON:</TextBlock>
         </DockPanel>

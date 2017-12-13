@@ -9,6 +9,8 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 using Marss.JsonViewer.Services;
+using EnvDTE;
+using Marss.JsonViewer.ViewModels.Utils;
 
 namespace Marss.JsonViewer
 {
@@ -95,6 +97,8 @@ namespace Marss.JsonViewer
                 MenuCommand menuToolWin = new MenuCommand(ShowToolWindow, toolwndCommandID);
                 mcs.AddCommand( menuToolWin );
             }
+
+            DTEHelper.CurrentDTE = (DTE)((System.IServiceProvider)this).GetService(typeof(DTE));
         }
         #endregion
 
