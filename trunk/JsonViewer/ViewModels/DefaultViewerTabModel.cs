@@ -220,8 +220,8 @@ namespace Marss.JsonViewer.ViewModels
             string errorMessage;
             var formattedText = new JsonFormatter().FormatIfPossible(UnformattedJson, out errorMessage);
 
-            var path = Path.GetTempFileName();
-            path = Path.ChangeExtension(path, ".json");
+            TempFileManager.PurgeOldTempFiles();
+            var path = TempFileManager.GetTempFileFullPath();
             File.WriteAllText(path, formattedText);
 
             DTEHelper.OpenFile(path);

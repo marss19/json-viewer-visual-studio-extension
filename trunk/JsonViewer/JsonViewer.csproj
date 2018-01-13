@@ -196,6 +196,7 @@
     <Compile Include="ViewModels\Utils\DTEHelper.cs" />
     <Compile Include="ViewModels\Utils\GenericCommand.cs" />
     <Compile Include="ViewModels\Utils\MultiValuesConverter.cs" />
+    <Compile Include="Services\TempFileManager.cs" />
     <Compile Include="Views\ComparerControl.xaml.cs">
       <DependentUpon>ComparerControl.xaml</DependentUpon>
     </Compile>
