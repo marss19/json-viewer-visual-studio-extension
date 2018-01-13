@@ -24,16 +24,7 @@
                 <TextBlock Margin="3 0">Print</TextBlock>
             </Button>
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding OpenFileCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
-                <TextBlock Margin="3 0">Format &amp; open in separate tab</TextBlock>
-            </Button>
-            <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}">
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource MultiValuesConverter}">
-                        <Binding ElementName="tbViewer"/>
-                        <Binding ElementName="tbInput"/>
-                    </MultiBinding>
-                </Button.CommandParameter>
-                <TextBlock Margin="3 0">Format programmer-friendly</TextBlock>
+                <TextBlock Margin="3 0">Open in New Tab</TextBlock>
             </Button>
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FormatHumanFriendlyCommand}">
                 <Button.CommandParameter>
@@ -42,7 +33,16 @@
                         <Binding ElementName="tbInput"/>
                     </MultiBinding>
                 </Button.CommandParameter>
-                <TextBlock Margin="3 0">Format human-friendly</TextBlock>
+                <TextBlock Margin="3 0">Format Human-Friendly</TextBlock>
+            </Button>
+            <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource MultiValuesConverter}">
+                        <Binding ElementName="tbViewer"/>
+                        <Binding ElementName="tbInput"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <TextBlock Margin="3 0">Format</TextBlock>
             </Button>
             <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON:</TextBlock>
         </DockPanel>
