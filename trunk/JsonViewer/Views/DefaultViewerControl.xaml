@@ -13,8 +13,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"  MaxHeight="400" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -52,12 +52,12 @@
                  VerticalScrollBarVisibility="Auto" Name="tbInput" Margin="3"
                  Text="{Binding UnformattedJson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <GridSplitter Grid.Row="2" DockPanel.Dock="Bottom" Height="3" Margin="3 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"   />
+        <GridSplitter Grid.Row="2" DockPanel.Dock="Bottom" Height="3" Margin="3 0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         <FlowDocumentScrollViewer  Name="tbViewer" Grid.Row="3"
-                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                 Margin="3"/>
+                VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                Margin="3"/>
 
     </Grid>
 </UserControl>
