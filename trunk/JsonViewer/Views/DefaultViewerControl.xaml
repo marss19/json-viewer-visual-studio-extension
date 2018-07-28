@@ -13,18 +13,30 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"  MaxHeight="400" />
+            <RowDefinition Height="100"  MaxHeight="400" />
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
 
         <DockPanel Grid.Row="0" LastChildFill="True">
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding CleanCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource MultiValuesConverter}">
+                        <Binding ElementName="tbViewer"/>
+                        <Binding ElementName="tbInput"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+                <TextBlock Margin="3 0">Clean</TextBlock>
+            </Button>
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding PrintCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
                 <TextBlock Margin="3 0">Print</TextBlock>
             </Button>
+            <Button DockPanel.Dock="Right" Margin="3" Command="{Binding OpenClipboardDataCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
+                <TextBlock Margin="3 0">Format clipboard data in new tab</TextBlock>
+            </Button>
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding OpenFileCommand}" CommandParameter="{Binding Path=., ElementName=tbViewer}">
-                <TextBlock Margin="3 0">Open in New Tab</TextBlock>
+                <TextBlock Margin="3 0">Format in new tab</TextBlock>
             </Button>
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FormatHumanFriendlyCommand}">
                 <Button.CommandParameter>
@@ -33,7 +45,7 @@
                         <Binding ElementName="tbInput"/>
                     </MultiBinding>
                 </Button.CommandParameter>
-                <TextBlock Margin="3 0">Format Human-Friendly</TextBlock>
+                <TextBlock Margin="3 0">Format human-friendly</TextBlock>
             </Button>
             <Button DockPanel.Dock="Right" Margin="3"  Command="{Binding FormatProgrammerFriendlyCommand}">
                 <Button.CommandParameter>
@@ -47,7 +59,7 @@
             <TextBlock Margin="3" HorizontalAlignment="Left">Paste JSON:</TextBlock>
         </DockPanel>
 
-        <TextBox  Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="100"
+        <TextBox  Grid.Row="1" AcceptsReturn="True" MinHeight="100"
                  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                  VerticalScrollBarVisibility="Auto" Name="tbInput" Margin="3"
                  Text="{Binding UnformattedJson, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

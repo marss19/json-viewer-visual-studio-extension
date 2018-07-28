@@ -20,7 +20,7 @@
 
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
             <Button Margin="3" Command="{Binding CompareFormattedCommand}">
-                <TextBlock Margin="3 0">Format &amp; Compare</TextBlock>
+                <TextBlock Margin="3 0">Format &amp; compare</TextBlock>
             </Button>
             <Button Margin="3" Command="{Binding CompareCommand}">
                 <TextBlock Margin="3 0">Compare</TextBlock>

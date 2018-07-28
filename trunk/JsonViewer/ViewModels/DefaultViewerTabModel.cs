@@ -29,9 +29,12 @@ namespace Marss.JsonViewer.ViewModels
 
             FormatProgrammerFriendlyCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, FormatProgrammerFriendly, CanFormat);
             FormatHumanFriendlyCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, FormatHumanFriendly, CanFormat);
-
+            
             PrintCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, Print, CanPrint);
+            CleanCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, Clean, CanClean);
+
             OpenFileCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, OpenFile, CanOpenFile);
+            OpenClipboardDataCommand = new GenericCommand<DefaultViewerTabViewModel, object>(this, OpenClipboardData, CanOpenClipboardData);
         }
 
 
@@ -50,6 +53,8 @@ namespace Marss.JsonViewer.ViewModels
         public ICommand FormatHumanFriendlyCommand { get; private set; }
         public ICommand PrintCommand { get; private set; }
         public ICommand OpenFileCommand { get; private set; }
+        public ICommand OpenClipboardDataCommand { get; private set; }
+        public ICommand CleanCommand { get; private set; }
 
         public override bool CanBeRemoved
         {
@@ -65,8 +70,24 @@ namespace Marss.JsonViewer.ViewModels
 
         private string _unformattedJson;
 
+        private bool JsonSizeIsOK()
+        {
+            if (UnformattedJson.Length > 100000)
+            { 
+                var messageBoxResult = MessageBox.Show("JSON is big for quick formatting and may cause Visual Studio slowdown when calculating. Format in a new tab is a preferable option in this case. Do you still want to do quick format?", 
+                    "Big JSON Format Confirmation", 
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Warning);
+                    return messageBoxResult == MessageBoxResult.Yes;       
+            }
+            return true;
+        }
+
         private void FormatProgrammerFriendly(DefaultViewerTabViewModel vm, object parameter)
         {
+            if (!JsonSizeIsOK())
+                return;
+
             var tbViewer = ((List<object>)parameter)[0] as FlowDocumentScrollViewer;
             var tbInput = ((List<object>)parameter)[1] as TextBox;
 
@@ -78,6 +99,9 @@ namespace Marss.JsonViewer.ViewModels
 
         private void FormatHumanFriendly(DefaultViewerTabViewModel vm, object parameter)
         {
+            if (!JsonSizeIsOK())
+                return;
+
             var tbViewer = ((List<object>)parameter)[0] as FlowDocumentScrollViewer;
             var tbInput = ((List<object>)parameter)[1] as TextBox;
 
@@ -215,27 +239,54 @@ namespace Marss.JsonViewer.ViewModels
 
         private void OpenFile(DefaultViewerTabViewModel vm, object parameter)
         {
-            var tbInput = parameter as TextBox;
+            OpenTextInNewTab(UnformattedJson);
+        }
 
+        private void OpenTextInNewTab(string text)
+        {
             string errorMessage;
-            var formattedText = new JsonFormatter().FormatIfPossible(UnformattedJson, out errorMessage);
+            var formattedText = new JsonFormatter().FormatIfPossible(text, out errorMessage);
 
             TempFileManager.PurgeOldTempFiles();
             var path = TempFileManager.GetTempFileFullPath();
             File.WriteAllText(path, formattedText);
 
             DTEHelper.OpenFile(path);
-
-
-            var tbViewer = parameter as FlowDocumentScrollViewer;
-
-
         }
 
         private bool CanOpenFile(DefaultViewerTabViewModel vm, object parameter)
         {
             return !string.IsNullOrWhiteSpace(vm.UnformattedJson);
         }
+
+        private void OpenClipboardData(DefaultViewerTabViewModel vm, object parameter)
+        {
+            var text = Clipboard.GetText();
+            OpenTextInNewTab(text);
+        }
+
+        private bool CanOpenClipboardData(DefaultViewerTabViewModel vm, object parameter)
+        {
+            return Clipboard.ContainsText();
+        }
+
+
+        private void Clean(DefaultViewerTabViewModel vm, object parameter)
+        {
+            var tbViewer = ((List<object>)parameter)[0] as FlowDocumentScrollViewer;
+            var tbInput = ((List<object>)parameter)[1] as TextBox;
+
+            tbInput.Text = "";
+            tbViewer.Document = null;
+        }
+
+        private bool CanClean(DefaultViewerTabViewModel vm, object parameter)
+        {
+            var hasDataInTextbox = !string.IsNullOrWhiteSpace(vm.UnformattedJson);
+            var hasDataInViewer = parameter != null && (((List<object>)parameter)[0] as FlowDocumentScrollViewer).Document != null;
+            return hasDataInTextbox || hasDataInViewer;
+        }
+
         #endregion
     }
 }
