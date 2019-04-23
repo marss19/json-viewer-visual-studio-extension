@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="c21a2a7b-7b1c-45c9-bee3-3bdc0715bdc9" Version="1.1.4.2" Language="en-US" Publisher="Mykola Tarasyuk" />
+        <Identity Id="c21a2a7b-7b1c-45c9-bee3-3bdc0715bdc9" Version="1.1.5.0" Language="en-US" Publisher="Mykola Tarasyuk" />
         <DisplayName>JSON Viewer</DisplayName>
         <Description xml:space="preserve">A tool to format JSON to a friendly view, compare and print formatted results, evaluate JSONPath expressions</Description>
-        <MoreInfo>http://marss.co.ua/search/label/JSON%20Viewer</MoreInfo>
+        <MoreInfo>https://www.marss.co.ua/search/label/JSON%20Viewer</MoreInfo>
         <License>Resources\license.md</License>
         <Icon>Resources\icon-90x90.png</Icon>
         <PreviewImage>Resources\icon-175x175.png</PreviewImage>
@@ -21,6 +21,6 @@
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
     </Assets>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" />
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" />
     </Prerequisites>
 </PackageManifest>
