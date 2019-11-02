@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Marss.JsonViewer.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Marss.JsonViewer.Views
         public ComparerControl()
         {
             InitializeComponent();
+            DataContext = new ComparerControlViewModel();
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿<Window x:Class="Marss.JsonViewer.Views.SelectorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Marss.JsonViewer.ViewModels"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        Title="JSON Viewer 2" 
+        Height="150" 
+        Width="400" 
+        Background="{DynamicResource VsBrush.Window}"
+        Foreground="{DynamicResource VsBrush.WindowText}"
+        ResizeMode="NoResize" 
+        ShowInTaskbar="False" 
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight">
+    <Window.Content>
+        <DockPanel>
+            <Button DockPanel.Dock="Left" Width="150" Margin="3 3 3 3" Command="{Binding OpenClipboardDataJsonFileCommand}" >
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/JsonViewer;component/Resources/clipboard-48.png" Height="48" Width="48"/>
+                    <TextBlock>Open JSON from Clipboard</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button DockPanel.Dock="Left" Width="150" Margin="0 3 3 3" Command="{Binding OpenEmptyJsonFileCommand}">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/JsonViewer;component/Resources/empty-48.png" Height="48" Width="48"/>
+                    <TextBlock>Open Empty JSON File</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button DockPanel.Dock="Left" Width="150" Margin="0 3 3 3" Command="{Binding CompareJsonsCommand}">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/JsonViewer;component/Resources/compare-48.png" Height="48" Width="48"/>
+                    <TextBlock>Compare JSON</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button DockPanel.Dock="Left" Width="150" Margin="0 3 3 3" Command="{Binding OpenPathEvaluatorCommand}">
+                <StackPanel Orientation="Vertical">
+                    <Image Source="/JsonViewer;component/Resources/path-48.png" Height="48" Width="48"/>
+                    <TextBlock>Evaluate JSONPath</TextBlock>
+                </StackPanel>
+            </Button>
+        </DockPanel>
+    </Window.Content>
+</Window>

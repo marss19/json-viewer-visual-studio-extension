@@ -6,37 +6,35 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Documents;
 
-namespace Marss.JsonViewer.Services
+namespace Marss.JsonViewer.Helpers
 {
-    public class JsonFormatter
+    public static class JsonFormatter
     {
-        public string FormatIfPossible(string json)
+        public static string FormatIfPossible(string json)
         {
             string errorMessage;
             return FormatIfPossible(json, out errorMessage);
         }
 
-        public string FormatIfPossible(string json, out string errorMessage)
+        public static string FormatIfPossible(string json, out string errorMessage)
         {
             errorMessage = null;
             try
             {
                 return Format(json);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 errorMessage = ex.Message;
                 return json;
             }
         }
 
-   
+
         #region private
 
-        private string Format(string json)
+        private static string Format(string json)
         {
             if (string.IsNullOrEmpty(json))
                 return json;
