@@ -3,36 +3,30 @@
 This is a simple Visual Studio extension to view and manipulate JSON. After installation it is available in the main menu: Tools -&gt; JSON Viewer.
 
 **Features:**
-- ability to format JSON
-- ability to print formatted data
-- ability to compare 2 JSONs
-- ability to validate incorrect JSON
+- ability to open prelminary formatted JSON data from the clipboard
+- ability to open empty temporary JSON file
+- ability to compare two JSON data
 - ability to evaluate JSONPath expressions
 
 Download the latest release from Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=MykolaTarasyuk.JSONViewer
 
 
-##### Screenshot 1. General View.
-![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-general.png)
+##### Screenshot 1. Start window.
+![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-main.png)
 
 
 
-##### Screenshot 2. Alternative formatting.
-![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-general2.png)
+##### Screenshot 2. A temporary file displaying prelminary formatted JSON data from the clipboard.
+![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-pastedfromclipboard.png)
 
 
 
-##### Screenshot 3. Validation.
-![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jw-validator.png)
+##### Screenshot 4. Comparison of JSON data.
+![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-compare.png)
 
 
 
-##### Screenshot 4. Comparison of JSONs.
-![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jw-compare.png)
-
-
-
-##### Screenshot 5. JSONPath expressions evaluation.
+##### Screenshot 5. Evaluation of JSONPath expressions.
 ![alt tag](https://github.com/marss19/json-viewer-visual-studio-extension/blob/master/docs/jv-jsonpath.png)
 
 

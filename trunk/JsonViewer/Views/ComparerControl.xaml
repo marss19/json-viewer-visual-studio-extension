@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Marss.JsonViewer.Views"
-
              mc:Ignorable="d" 
+             Background="{DynamicResource VsBrush.Window}"
+             Foreground="{DynamicResource VsBrush.WindowText}"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
@@ -18,14 +19,16 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
-            <Button Margin="3" Command="{Binding CompareFormattedCommand}">
-                <TextBlock Margin="3 0">Format &amp; compare</TextBlock>
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" LastChildFill="True">
+            <Button DockPanel.Dock="Left" Margin="3" Command="{Binding CompareFormattedCommand}">
+                <TextBlock Margin="3 0">Format &amp; Compare</TextBlock>
             </Button>
-            <Button Margin="3" Command="{Binding CompareCommand}">
+            <Button DockPanel.Dock="Left" Margin="3" Command="{Binding CompareCommand}">
                 <TextBlock Margin="3 0">Compare</TextBlock>
             </Button>
-        </StackPanel>
+            <TextBlock DockPanel.Dock="Left" Margin="3" TextWrapping="Wrap" 
+                       Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+        </DockPanel>
 
         <TextBox HorizontalAlignment="Stretch" Grid.Row="1"
                  Text="{Binding Json1Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="3"></TextBox>
