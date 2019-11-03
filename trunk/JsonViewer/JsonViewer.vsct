@@ -94,6 +94,9 @@
  
   </Commands>
 
+  <KeyBindings>
+    <KeyBinding guid="guidJsonViewerCmdSet" id="cmdidJsnVwr" mod1="Control" key1="J" mod2="Control" key2="J" editor="guidVSStd97"/>
+  </KeyBindings>
 
 
 
