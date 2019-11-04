@@ -14,8 +14,8 @@
         WindowStartupLocation="CenterScreen" 
         SizeToContent="WidthAndHeight">
     <Window.InputBindings>
-        <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding OpenClipboardDataJsonFileCommand}" />
-        <KeyBinding Key="K" Modifiers="Ctrl" Command="{Binding CompareJsonsCommand}" />
+        <KeyBinding Key="P" Modifiers="Ctrl+Shift" Command="{Binding OpenClipboardDataJsonFileCommand}" />
+        <KeyBinding Key="K" Modifiers="Ctrl+Shift" Command="{Binding CompareJsonsCommand}" />
     </Window.InputBindings>
     <Window.Content>
         <StackPanel Orientation="Vertical">
@@ -25,7 +25,7 @@
                     <TextBlock VerticalAlignment="Center" Width="180" Margin="5 0 0 0">
                         <Run Text="View JSON from clipboard"/>
                         <LineBreak/>
-                        <Run Text="(Ctrl+P)"/>
+                        <Run Text="(Ctrl+Shift+P)"/>
                     </TextBlock>
                 </StackPanel>
             </Button>
@@ -43,7 +43,7 @@
                     <TextBlock VerticalAlignment="Center" Width="180" Margin="5 0 0 0">
                         <Run Text="Compare JSON data"/>
                         <LineBreak/>
-                        <Run Text="(Ctrl+K)"/>
+                        <Run Text="(Ctrl+Shift+K)"/>
                     </TextBlock>
                 </StackPanel>
             </Button>

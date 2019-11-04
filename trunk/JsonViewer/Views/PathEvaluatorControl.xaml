@@ -21,7 +21,12 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Margin="3" HorizontalAlignment="Left">JSONPath expression</TextBlock>
-
+        <TextBlock Grid.Row="0" Margin="3" HorizontalAlignment="Right">
+            <Hyperlink NavigateUri="https://goessner.net/articles/JsonPath/" 
+                       ToolTip="JSONPath syntax"
+                       RequestNavigate="Hyperlink_RequestNavigate">Help</Hyperlink>
+        </TextBlock>
+ 
         <DockPanel Grid.Row="1" LastChildFill="True">
             <Button DockPanel.Dock="Right" Margin="3" Command="{Binding FindCommand}">
                 <TextBlock Margin="3 0">Search</TextBlock>
