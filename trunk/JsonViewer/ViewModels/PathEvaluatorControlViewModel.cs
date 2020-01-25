@@ -14,7 +14,7 @@ namespace Marss.JsonViewer.ViewModels
     {
         public PathEvaluatorControlViewModel()
         {
-            Results = Array.Empty<string>();
+            Results = string.Empty;
 
             FindCommand = new GenericCommand<PathEvaluatorControlViewModel, object>(this, Find, CanFind);
         }
@@ -35,7 +35,7 @@ namespace Marss.JsonViewer.ViewModels
             }
         }
 
-        public IEnumerable<string> Results
+        public string Results
         {
             get { return _results; }
             set { SetProperty(ref _results, value, "Results"); }
@@ -54,17 +54,17 @@ namespace Marss.JsonViewer.ViewModels
 
         private string _source;
         private string _expression;
-        private IEnumerable<string> _results;
+        private string _results;
         private string _errorMessage;
 
         private void Find(PathEvaluatorControlViewModel vm, object parameter)
         {
-            Results = Array.Empty<string>();
+            Results = string.Empty;
             try
             {
                 var input = JToken.Parse(Source);
                 var results = input.SelectTokens(Expression);
-                Results = results.Select(x => x.ToString()).ToArray();
+                Results = string.Join(Environment.NewLine, results.Select(x => x.ToString()));
 
                 ErrorMessage = Results.Any() ? null :"Nothing found.";
             }
@@ -83,7 +83,7 @@ namespace Marss.JsonViewer.ViewModels
         {
             JsonFormatter.FormatIfPossible(text, out string error);
 
-            Results = Enumerable.Empty<string>();
+            Results = string.Empty;
             ErrorMessage = string.IsNullOrEmpty(error) ? null : $"Invalid JSON format. {error}";
         }
 

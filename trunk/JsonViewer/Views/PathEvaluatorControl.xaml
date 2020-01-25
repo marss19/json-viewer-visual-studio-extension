@@ -20,11 +20,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Margin="3" HorizontalAlignment="Left">JSONPath expression</TextBlock>
+        <TextBlock Grid.Row="0" Margin="3" HorizontalAlignment="Left">Search expression</TextBlock>
         <TextBlock Grid.Row="0" Margin="3" HorizontalAlignment="Right">
             <Hyperlink NavigateUri="https://goessner.net/articles/JsonPath/" 
                        ToolTip="JSONPath syntax"
-                       RequestNavigate="Hyperlink_RequestNavigate">Help</Hyperlink>
+                       RequestNavigate="Hyperlink_RequestNavigate">JSONPath syntax help</Hyperlink>
         </TextBlock>
  
         <DockPanel Grid.Row="1" LastChildFill="True">
@@ -36,47 +36,32 @@
         </DockPanel>
 
 
-        <TextBlock Grid.Row="2" Margin="3" HorizontalAlignment="Left">Input</TextBlock>
+        <TextBlock Grid.Row="2" Margin="3" HorizontalAlignment="Left">Input JSON</TextBlock>
 
         <TextBox Grid.Row="3" Margin="3" AcceptsReturn="True"
                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
+                 VerticalScrollBarVisibility="Auto"
                  Text="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 
-        <TextBlock Grid.Row="0" Grid.Column="1" Margin="3" HorizontalAlignment="Left">Search</TextBlock>
 
 
-        <Border Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Margin="3" BorderBrush="LightGray" BorderThickness="1">
-            <StackPanel Orientation="Vertical">
-                <StackPanel.Resources>
-                    <Style TargetType="TextBlock">
-                        <Style.Triggers>
-                            <Trigger Property="Text" Value="">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </Trigger>
-                            <Trigger Property="Text" Value="{x:Null}">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Resources>
-                <TextBlock Margin="3" Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                           TextWrapping="Wrap"></TextBlock>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding Path=Results, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Margin="3" Text="{Binding}"></TextBlock>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
-            </StackPanel>
-        </Border>
+        <TextBlock Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3" 
+                   Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   TextWrapping="Wrap" VerticalAlignment="Bottom"></TextBlock>
+
+        <TextBlock Grid.Column="1" Grid.Row="2" Margin="3" HorizontalAlignment="Left">Search results</TextBlock>
+
+        <TextBox Grid.Column="1" Grid.Row="3"  
+                    VerticalScrollBarVisibility="Auto" 
+                    HorizontalScrollBarVisibility="Auto"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="3"
+                    Background="{DynamicResource VsBrush.Window}"
+                    Foreground="{DynamicResource VsBrush.WindowText}"
+                    Text="{Binding Results, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="True"></TextBox>
+ 
 
     </Grid>
 </UserControl>
