@@ -53,6 +53,12 @@
                     <TextBlock VerticalAlignment="Center" Width="180" Margin="5 0 0 0">Evaluate JSONPath</TextBlock>
                 </StackPanel>
             </Button>
+            <TextBlock Margin="3 0 3 3" HorizontalAlignment="Right">
+                <Hyperlink NavigateUri="https://marketplace.visualstudio.com/items?itemName=MykolaTarasyuk.JSONViewer&amp;ssr=false#review-details" 
+                       ToolTip="Ask a question, provide a suggestion or send feedback"
+                       RequestNavigate="Hyperlink_RequestNavigate">Send feedback</Hyperlink>
+            </TextBlock>
+
         </StackPanel>
     </Window.Content>
 </Window>
