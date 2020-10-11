@@ -2,7 +2,7 @@
 
 This is a simple Visual Studio extension to view and manipulate JSON. After installation it is available in the main menu: Tools -&gt; JSON Viewer.
 
-**Features:**
+**Features:** 
 - ability to open prelminary formatted JSON data from the clipboard
 - ability to open empty temporary JSON file
 - ability to compare two JSON data
