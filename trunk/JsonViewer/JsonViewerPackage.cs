@@ -75,7 +75,7 @@ namespace Marss.JsonViewer
         {
             var dialog = new SelectorWindow();
 
-            var hwnd = new IntPtr(VsExtensionHelper.CurrentDTE.MainWindow.HWnd);
+            var hwnd = VsExtensionHelper.CurrentDTE.MainWindow.HWnd;
             var window = (System.Windows.Window)HwndSource.FromHwnd(hwnd).RootVisual;
             dialog.Owner = window;
 
