@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="5D0AFDE4-ED81-468D-951D-314E639FD345" Version="3.0.1.0" Language="en-US" Publisher="Mykola Tarasyuk" />
+        <Identity Id="5D0AFDE4-ED81-468D-951D-314E639FD345" Version="3.0.2.0" Language="en-US" Publisher="Mykola Tarasyuk" />
         <DisplayName>JSON Viewer 2022</DisplayName>
         <Description xml:space="preserve">A tool to format JSON to a friendly view, compare and print formatted results, evaluate JSONPath expressions</Description>
-        <MoreInfo>https://marketplace.visualstudio.com/items?itemName=MykolaTarasyuk.JSONViewer</MoreInfo>
+        <MoreInfo>https://marketplace.visualstudio.com/items?itemName=MykolaTarasyuk.JSONViewerVS2022</MoreInfo>
         <License>Resources\license.md</License>
         <Icon>Resources\icon-90x90.png</Icon>
         <PreviewImage>Resources\icon-175x175.png</PreviewImage>

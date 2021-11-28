@@ -67,12 +67,6 @@
 		</Bitmaps>
 	</Commands>
 
-	<KeyBindings>
-		<KeyBinding guid="guidJsonViewerCmdSet" id="cmdidPasteJsonFromClipboard" mod1="Control Shift" key1="J" mod2="Control Shift" key2="J" editor="guidVSStd97"/>
-	  <KeyBinding guid="guidJsonViewerCmdSet" id="cmdidCompareJsonData" mod1="Control Shift" key1="J" mod2="Control Shift" key2="K" editor="guidVSStd97"/>
-	</KeyBindings>
-
-
 	<Symbols>
 		<GuidSymbol name="guidJsonViewerPkg" value="{c21a2a7b-7b1c-45c9-bee3-3bdc0715bdc9}" />
 
