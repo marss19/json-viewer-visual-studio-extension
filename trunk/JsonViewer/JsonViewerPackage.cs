@@ -14,6 +14,10 @@ using EnvDTE;
 using Marss.JsonViewer.Helpers;
 using Marss.JsonViewer.Views;
 using System.Windows.Interop;
+using System.Threading.Tasks;
+using System.Threading;
+using System.IO;
+using System.Windows;
 
 namespace Marss.JsonViewer
 {
@@ -39,18 +43,13 @@ namespace Marss.JsonViewer
     [ProvideToolWindow(typeof(ComparerToolWindowPane))]
     [ProvideToolWindow(typeof(PathEvaluatorToolWindowPane))]
     [Guid(GuidList.guidJsonViewerPkgString)]
-    public sealed class JsonViewerPackage : Package
+    public sealed class JsonViewerPackage : AsyncPackage
     {
 
         #region Package Members
 
-        /// <summary>
-        /// Initialization of the package; this method is called right after the package is sited, so this is the place
-        /// where you can put all the initialization code that rely on services provided by VisualStudio.
-        /// </summary>
-        protected override void Initialize()
+        protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-            base.Initialize();
 
             VsExtensionHelper.CurrentDTE = (DTE)((System.IServiceProvider)this).GetService(typeof(DTE));
             VsExtensionHelper.Package = this;
@@ -58,28 +57,75 @@ namespace Marss.JsonViewer
             OleMenuCommandService commandService = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
+                commandService.AddCommand(new MenuCommand(
+                    PasteFromClipboardMenuItemCallback,
+                    new CommandID(GuidList.guidJsonViewerCmdSet, (int)PkgCmdIDList.cmdidPasteJsonFromClipboard))
+                );
 
-                CommandID menuCommandID = new CommandID(GuidList.guidJsonViewerCmdSet, (int)PkgCmdIDList.cmdidJsnVwr);
-                MenuCommand menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
-                commandService.AddCommand(menuItem);
+                commandService.AddCommand(new MenuCommand(
+                    OpenEmptyJsonFileMenuItemCallback, 
+                    new CommandID(GuidList.guidJsonViewerCmdSet, (int)PkgCmdIDList.cmdidOpenEmptyJsonFile))
+                );
 
-                CommandID toolwndCommandID = new CommandID(GuidList.guidJsonViewerCmdSet, (int)PkgCmdIDList.cmdidJsnVwrTool);
-                MenuCommand menuToolWin = new MenuCommand(MenuItemCallback, toolwndCommandID);
-                commandService.AddCommand(menuToolWin);
+                commandService.AddCommand(new MenuCommand(
+                    CompareJsonDataMenuItemCallback,
+                    new CommandID(GuidList.guidJsonViewerCmdSet, (int)PkgCmdIDList.cmdidCompareJsonData))
+                );
+
+                commandService.AddCommand(new MenuCommand(
+                    EvaluateJsonPathMenuItemCallback,
+                    new CommandID(GuidList.guidJsonViewerCmdSet, (int)PkgCmdIDList.cmdidEvaluateJSONPath))
+                );
+
+                commandService.AddCommand(new MenuCommand(
+                    SendFeedbackMenuItemCallback,
+                    new CommandID(GuidList.guidJsonViewerCmdSet, (int)PkgCmdIDList.cmdidSendFeedback))
+                );
             }
+
+            // When initialized asynchronously, the current thread may be a background thread at this point.
+            // Do any initialization that requires the UI thread after switching to the UI thread.
+            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
         }
+
+
         #endregion
 
-
-        private void MenuItemCallback(object sender, EventArgs e)
+        private void OpenJsonFile(string text)
         {
-            var dialog = new SelectorWindow();
+            TempFileManager.PurgeOldTempFiles();
+            var path = TempFileManager.GetTempFileFullPath();
 
-            var hwnd = VsExtensionHelper.CurrentDTE.MainWindow.HWnd;
-            var window = (System.Windows.Window)HwndSource.FromHwnd(hwnd).RootVisual;
-            dialog.Owner = window;
+            var formattedText = JsonFormatter.FormatIfPossible(text);
+            File.WriteAllText(path, formattedText);
 
-            dialog.ShowDialog();
+            VsExtensionHelper.OpenFile(path);
+        }
+
+        private void PasteFromClipboardMenuItemCallback(object sender, EventArgs e)
+        {
+            OpenJsonFile(Clipboard.GetText());
+        }
+
+        private void OpenEmptyJsonFileMenuItemCallback(object sender, EventArgs e)
+        {
+            OpenJsonFile("");
+        }
+
+        private void CompareJsonDataMenuItemCallback(object sender, EventArgs e)
+        {
+            VsExtensionHelper.ShowToolWindow<ComparerToolWindowPane>();
+        }
+
+        private void EvaluateJsonPathMenuItemCallback(object sender, EventArgs e)
+        {
+            VsExtensionHelper.ShowToolWindow<PathEvaluatorToolWindowPane>();
+        }
+
+        private void SendFeedbackMenuItemCallback(object sender, EventArgs e)
+        {
+            var url = "https://marketplace.visualstudio.com/items?itemName=MykolaTarasyuk.JSONViewerVS2022&ssr=false#review-details";
+            System.Diagnostics.Process.Start(url);
         }
 
     }

@@ -1,123 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<Extern href="stdidcmd.h"/>
+	<Extern href="vsshlids.h"/>
+	
+	<Commands package="guidJsonViewerPkg">
+		
+		<Menus>
+			<Menu guid="guidJsonViewerCmdSet" id="JsonViewerTopLevelMenu" priority="0x700" type="Menu">
+				<Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS"/>
+				<Strings>
+					<ButtonText>JSON Viewer</ButtonText>
+				</Strings>
+			</Menu>
+		</Menus>
 
-  <!--  This is the file that defines the actual layout and type of the commands.
-        It is divided in different sections (e.g. command definition, command
-        placement, ...), with each defining a specific set of properties.
-        See the comment before each section for more details about how to
-        use it. -->
+		<Groups>
+			<Group guid="guidJsonViewerCmdSet" id="JsonViewerMenuGroup" priority="0x0600">
+				<Parent guid="guidJsonViewerCmdSet" id="JsonViewerTopLevelMenu"/>
+			</Group>
+			<Group guid="guidJsonViewerCmdSet" id="JsonViewerMenuGroup2" priority="0x0601">
+				<Parent guid="guidJsonViewerCmdSet" id="JsonViewerTopLevelMenu"/>
+			</Group>
+		</Groups>
 
-  <!--  The VSCT compiler (the tool that translates this file into the binary 
-        format that VisualStudio will consume) has the ability to run a preprocessor 
-        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so 
-        it is possible to define includes and macros with the same syntax used 
-        in C++ files. Using this ability of the compiler here, we include some files 
-        defining some of the constants that we will use inside the file. -->
+		<Buttons>
+			<Button guid="guidJsonViewerCmdSet" id="cmdidPasteJsonFromClipboard" priority="0x0100" type="Button">
+				<Parent guid="guidJsonViewerCmdSet" id="JsonViewerMenuGroup" />
+				<Icon guid="guidImages" id="bmpClipboard" />
+				<Strings>
+					<ButtonText>View JSON from Clipboard</ButtonText>
+				</Strings>
+			</Button>
+			<Button guid="guidJsonViewerCmdSet" id="cmdidOpenEmptyJsonFile" priority="0x0101" type="Button">
+				<Parent guid="guidJsonViewerCmdSet" id="JsonViewerMenuGroup" />
+				<Strings>
+					<ButtonText>Open Empty JSON File</ButtonText>
+				</Strings>
+			</Button>
+			<Button guid="guidJsonViewerCmdSet" id="cmdidCompareJsonData" priority="0x0102" type="Button">
+				<Parent guid="guidJsonViewerCmdSet" id="JsonViewerMenuGroup" />
+				<Icon guid="guidImages" id="bmpCompare" />
+				<Strings>
+					<ButtonText>Compare JSON Data</ButtonText>
+				</Strings>
+			</Button>
+			<Button guid="guidJsonViewerCmdSet" id="cmdidEvaluateJSONPath" priority="0x0103" type="Button">
+				<Parent guid="guidJsonViewerCmdSet" id="JsonViewerMenuGroup" />
+				<Icon guid="guidImages" id="bmpJsonPath" />
+				<Strings>
+					<ButtonText>Evaluate JSONPath Expressions</ButtonText>
+				</Strings>
+			</Button>
+			<Button guid="guidJsonViewerCmdSet" id="cmdidSendFeedback" priority="0x0104" type="Button">
+				<Parent guid="guidJsonViewerCmdSet" id="JsonViewerMenuGroup2" />
+				<Strings>
+					<ButtonText>Send Feedback</ButtonText>
+				</Strings>
+			</Button>
+		</Buttons>
 
-  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
-  <Extern href="stdidcmd.h"/>
+		<Bitmaps>
+			<Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpPic1"/>
+			<Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpClipboard"/>
+			<Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpCompare"/>
+			<Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpJsonPath"/>
+		</Bitmaps>
+	</Commands>
 
-  <!--This header contains the command ids for the menus provided by the shell. -->
-  <Extern href="vsshlids.h"/>
-
-
-
-
-  <!--The Commands section is where we the commands, menus and menu groups are defined.
-      This section uses a Guid to identify the package that provides the command defined inside it. -->
-  <Commands package="guidJsonViewerPkg">
-    <!-- Inside this section we have different sub-sections: one for the menus, another  
-    for the menu groups, one for the buttons (the actual commands), one for the combos 
-    and the last one for the bitmaps used. Each element is identified by a command id that  
-    is a unique pair of guid and numeric identifier; the guid part of the identifier is usually  
-    called "command set" and is used to group different command inside a logically related  
-    group; your package should define its own command set in order to avoid collisions  
-    with command ids defined by other packages. -->
-
-    
-    <!-- In this section you can define new menu groups. A menu group is a container for 
-         other menus or buttons (commands); from a visual point of view you can see the 
-         group as the part of a menu contained between two lines. The parent of a group 
-         must be a menu. -->
-    <Groups>
-
-      <Group guid="guidJsonViewerCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
-      </Group>
-      
-
-
-    </Groups>
-    
-    <!--Buttons section. -->
-    <!--This section defines the elements the user can interact with, like a menu command or a button 
-        or combo box in a toolbar. -->
-    <Buttons>
-      <!--To define a menu group you have to specify its ID, the parent menu and its display priority. 
-          The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
-          the CommandFlag node.
-          You can add more than one CommandFlag node e.g.:
-              <CommandFlag>DefaultInvisible</CommandFlag>
-              <CommandFlag>DynamicVisibility</CommandFlag>
-          If you do not want an image next to your command, remove the Icon node /> -->
-
-      <Button guid="guidJsonViewerCmdSet" id="cmdidJsnVwr" priority="0x0100" type="Button">
-        <Parent guid="guidJsonViewerCmdSet" id="MyMenuGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
-        <Strings>
-          <ButtonText>JSON Viewer</ButtonText>
-        </Strings>
-      </Button>
-
-
-      <Button guid="guidJsonViewerCmdSet" id="cmdidJsnVwrTool" priority="0x0100" type="Button">
-        <Parent guid="guidSHLMainMenu" id="IDG_VS_WNDO_OTRWNDWS1"/>
-        <Icon guid="guidImages" id="bmpPic1" />
-        <Strings>
-          <ButtonText>JSON Viewer</ButtonText>
-        </Strings>
-      </Button>
+	<KeyBindings>
+		<KeyBinding guid="guidJsonViewerCmdSet" id="cmdidPasteJsonFromClipboard" mod1="Control Shift" key1="J" mod2="Control Shift" key2="J" editor="guidVSStd97"/>
+	  <KeyBinding guid="guidJsonViewerCmdSet" id="cmdidCompareJsonData" mod1="Control Shift" key1="J" mod2="Control Shift" key2="K" editor="guidVSStd97"/>
+	</KeyBindings>
 
 
-    </Buttons>
-   
-    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
-    <Bitmaps>
-      <!--  The bitmap id is defined in a way that is a little bit different from the others: 
-            the declaration starts with a guid for the bitmap strip, then there is the resource id of the 
-            bitmap strip containing the bitmaps and then there are the numeric ids of the elements used 
-            inside a button definition. An important aspect of this declaration is that the element id 
-            must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpPic1"/>
-      
-    </Bitmaps>
- 
-  </Commands>
+	<Symbols>
+		<GuidSymbol name="guidJsonViewerPkg" value="{c21a2a7b-7b1c-45c9-bee3-3bdc0715bdc9}" />
 
-  <KeyBindings>
-    <KeyBinding guid="guidJsonViewerCmdSet" id="cmdidJsnVwr" mod1="Control Shift" key1="J" mod2="Control Shift" key2="J" editor="guidVSStd97"/>
-  </KeyBindings>
+		<GuidSymbol name="guidJsonViewerCmdSet" value="{faf211b8-a86a-49a0-a769-e15f98292c0a}">
+			<IDSymbol name="JsonViewerMenuGroup" value="0x1020" />
+			<IDSymbol name="JsonViewerMenuGroup2" value="0x1021" />
+			<IDSymbol name="JsonViewerTopLevelMenu" value="0x1022"/>
+			<IDSymbol name="cmdidPasteJsonFromClipboard" value="0x0100" />
+			<IDSymbol name="cmdidOpenEmptyJsonFile" value="0x0101" />
+			<IDSymbol name="cmdidCompareJsonData" value="0x0102" />
+			<IDSymbol name="cmdidEvaluateJSONPath" value="0x0103" />
+			<IDSymbol name="cmdidSendFeedback" value="0x0104" />
+		</GuidSymbol>
 
-
-
-
-  <Symbols>
-    <!-- This is the package guid. -->
-    <GuidSymbol name="guidJsonViewerPkg" value="{c21a2a7b-7b1c-45c9-bee3-3bdc0715bdc9}" />
-    
-    <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidJsonViewerCmdSet" value="{faf211b8-a86a-49a0-a769-e15f98292c0a}">
-
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="cmdidJsnVwr" value="0x0100" />
-      <IDSymbol name="cmdidJsnVwrTool" value="0x0101" />
-    </GuidSymbol>
-    
-    
-    
-    <GuidSymbol name="guidImages" value="{fa7f704d-9245-46d8-8514-192d37960e09}" >
-      <IDSymbol name="bmpPic1" value="1" />
-    </GuidSymbol>
-  </Symbols>
+		<GuidSymbol name="guidImages" value="{fa7f704d-9245-46d8-8514-192d37960e09}" >
+			<IDSymbol name="bmpPic1" value="1" />
+			<IDSymbol name="bmpClipboard" value="2" />
+			<IDSymbol name="bmpCompare" value="3" />
+			<IDSymbol name="bmpJsonPath" value="4" />
+		</GuidSymbol>
+	</Symbols>
 
 </CommandTable>
